@@ -1,12 +1,18 @@
 version: "3.8"
 
 services:
-  web:
+  backend:
     build: ./src
     ports:
         - "8080:8080"
     volumes:
         - "$PWD/src:/src"
+  frontend:
+    build: ./front
+    ports:
+        - "8081:3000"
+    volumes:
+        - "$PWD/front:/app"
   neo4j:
       image: "neo4j:latest"
       ports:
