@@ -2,7 +2,9 @@
 
 materias = {
     código,
-    nombre
+    nombre,
+    creditos,
+
 }
 
 usuarios = {

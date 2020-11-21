@@ -1,4 +1,17 @@
 {
+    "careerplan" : {
+        "name" : "S10",
+        "career" : "S",
+        "degreeLevel" : "GRADUATE",
+        "since" : "2010-08-01T00:00:00-03:00",
+        "section" : [ {
+            "name" : "Ciclo Básico",
+            "terms" : {
+                "term" : [ {
+                    "year" : "1",
+                    "period" : "1",
+                    "entries" : {
+                        "entry" : [ {
                             "type" : "subject",
                             "name" : "Sistemas de Representación",
                             "code" : "31.08",
@@ -2520,4 +2533,8 @@
                     "dependencies" : {
                         "dependency" : [ "93.07", "93.43" ]
                     }
-                }
+                } ]
+            }
+        } ]
+    }
+}
