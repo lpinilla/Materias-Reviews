@@ -1,5 +1,5 @@
 import json
-#import pymongo
+from pymongo import MongoClient
 
 f = open('plan_de_carrera.json', 'r')
 
@@ -33,6 +33,11 @@ careerplan = json.load(f)['careerplan']
 #   creditos
 #}
 
+#conectando con mongo
+mongo = MongoClient('localhost:27017')
+mongodb = mongo['bd2tp']
+materias_coll = mongodb['materias']
+
 materias = []
 correlativas = {}
 
@@ -45,14 +50,19 @@ def parse_courses(arr):
             'nombre'    : entry['name'],
             'creditos'  : entry['credits']
         }
-        materias.append(aux)
+        #checkear si no se agregó antes (por nombre)
+        found = False
+        for materia in materias:
+            if aux['nombre'] == materia['nombre']:
+                found = True
+        if not found:
+            materias.append(aux)
         #correlativas
         if entry['dependencies']:
             dependencies = entry['dependencies']['dependency']
             if not isinstance(dependencies, list):
                 dependencies = [dependencies]
             correlativas[entry['code']] = dependencies
-
 
 for section in careerplan['section']:
     if section['name'] == 'Ciclo Profesional - Orientaciones':
@@ -63,3 +73,6 @@ for section in careerplan['section']:
     if section['withoutTerm']:
         if section['withoutTerm']['withoutTerm']:
             parse_courses(section['withoutTerm']['withoutTerm'])
+
+result = materias_coll.insert_many(materias)
+print(result)
