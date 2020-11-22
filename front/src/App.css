@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -6,6 +7,8 @@
   height: 40vmin;
   pointer-events: none;
 }
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -36,3 +39,45 @@
     transform: rotate(360deg);
   }
 }
+
+.AppBar {
+  border-bottom: 1px solid darkgrey;
+}
+
+.ToolBar{
+  flex-wrap: 'wrap';
+}
+
+.Desc{
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+
+.Button{
+  font-size: 10px!important;
+  border:1px solid cornflowerblue !important;
+}
+
+.Tittle{
+  font-size: 20px;
+}
+
+.Typography{
+  font-weight: 200!important;
+  font-size: 50px!important;
+}
+
+.Grid{
+  display: flex;
+  align-items: baseline;
+  place-content: center;
+}
+
+.Card{
+  max-width: fit-content!important;
+}
+
+.CardHeader{
+  background-color: #eeeeee;
+}
+
