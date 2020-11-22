@@ -2,3 +2,5 @@ starlette==0.13.6
 pydantic
 uvicorn
 fastapi
+pymongo
+neo4j

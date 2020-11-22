@@ -10,7 +10,16 @@ GET /recommendation : obtener una recomendación/es de materias
 
 GET /my_ratings?page=x : obtener los X primeros ratings que hice históricamente
 
-# cosas de seguidores
+
+
+
+
+
+
+
+
+
+# cosas de seguidores ? (mejor mockear)
 
 GET /following: devuelve la lista de todos los amigos, ¿paginado?
 

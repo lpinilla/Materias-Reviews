@@ -7,6 +7,9 @@ services:
         - "8080:8080"
     volumes:
         - "$PWD/src:/src"
+    links:
+        - mongo
+        - neo4j
   frontend:
     build: ./front
     ports:
