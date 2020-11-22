@@ -1,9 +1,7 @@
 import React from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
-import Header from "./Components/Header";
-import Description from "./Components/Description";
-import Cards from "./Components/Cards";
+import Home from "./Components/Home";
 
 export const COLORS = {
   white: '#fff',
@@ -55,18 +53,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
 export default function App() {
   const classes = useStyles();
 
   return (
       <React.Fragment>
         <CssBaseline />
-        <Header />
-        <Description />
-        <Cards  />
+        <Home />
 
       {/*<Footer classes="classes"/>*/}
       </React.Fragment>
