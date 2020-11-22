@@ -3,7 +3,6 @@ from pymongo import MongoClient
 from Neo4jConnection import Neo4jConnection
 
 f = open('plan_de_carrera.json', 'r')
-
 careerplan = json.load(f)['careerplan']
 
 #ejemplo de seccion y materias
@@ -68,6 +67,7 @@ def parse_courses(arr):
                 dependencies = [dependencies]
             correlativas[entry['code']] = dependencies
 
+#por cada sección, agarrar cada cuatri y parsear las materias
 for section in careerplan['section']:
     if section['name'] == 'Ciclo Profesional - Orientaciones':
         continue
@@ -78,17 +78,19 @@ for section in careerplan['section']:
         if section['withoutTerm']['withoutTerm']:
             parse_courses(section['withoutTerm']['withoutTerm'])
 
-#result = materias_coll.insert_many(materias)
+#añadir las materias a mongo
+result = materias_coll.insert_many(materias)
 #print(result)
 
+#cargar las materias en neo4j
 #cargar primero todos los codigos de las materias
 for m in materias:
-    q = "CREATE (m:Materia {codigo: {}, nombre: {} })".format(m['codigo'], m['nombre'])
+    q = "CREATE (m:Materia {{codigo: '{}', nombre: '{}' }})".format(m['codigo'], m['nombre'])
     neo4j.query(q)
 
 #cargar las relaciones de correlativas
 for c in correlativas:
     for m in correlativas[c]:
-        q = "MATCH (m1:Materia {codigo : {}}), (m2:Materia {codigo : {}}) \
-            CREATE (m1)-[r:correlativa]->(m2)".format(c, m)
+        q = "MATCH (m1:Materia {{codigo: '{}' }}), (m2:Materia {{codigo: '{}' }}) \
+            CREATE (m1)-[r:correlativaDe]->(m2)".format(c, m)
         neo4j.query(q)
