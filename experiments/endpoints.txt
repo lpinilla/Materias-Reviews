@@ -13,16 +13,10 @@ GET /my_ratings?page=x : obtener los X primeros ratings que hice históricamente
 
 
 
-
-
-
-
-
-
 # cosas de seguidores ? (mejor mockear)
 
-GET /following: devuelve la lista de todos los amigos, ¿paginado?
+GET /friends: devuelve la lista de todos los amigos. Necesita user_id como sessionCookie
 
 GET /user?user_id : devolver información de un usuario
 
-POST /follow?user_id : seguir a un usuario
+POST /friend_request/?legajo : legajo del usuario al que vamos a amigar y necesita user_id como sessionCookie
