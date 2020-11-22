@@ -81,6 +81,14 @@ for section in careerplan['section']:
 #result = materias_coll.insert_many(materias)
 #print(result)
 
-q = "CREATE (a:Greeting) " + "SET a.message = 'hello world' " + "RETURN a.message + ', from node ' + id(a)"
+#cargar primero todos los codigos de las materias
+for m in materias:
+    q = "CREATE (m:Materia {codigo: {}, nombre: {} })".format(m['codigo'], m['nombre'])
+    neo4j.query(q)
 
-neo4j.query(q)
+#cargar las relaciones de correlativas
+for c in correlativas:
+    for m in correlativas[c]:
+        q = "MATCH (m1:Materia {codigo : {}}), (m2:Materia {codigo : {}}) \
+            CREATE (m1)-[r:correlativa]->(m2)".format(c, m)
+        neo4j.query(q)
