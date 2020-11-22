@@ -18,7 +18,7 @@ neo4j = Neo4jConnection(uri='bolt://neo4j:7687')
 
 @app.get("/")
 def read_root():
-    return {"Hello": "world"}
+    return {"Hello": "wold"}
 
 
 ############################## MATERIAS #################################
