@@ -19,12 +19,16 @@ neo4j = Neo4jConnection(uri='bolt://neo4j:7687')
 def read_root():
     return {"Hello": "world"}
 
-@app.get('/all_courses/')
+@app.get('/all_courses')
 def get_all_courses():
     materias = []
     cursor = materias_coll.find({}, {'_id': False})
     return {'materias': [doc for doc in cursor]}
 
+@app.get('/course/{codigo_materia}')
+def get_course(codigo_materia: str):
+    cursor = materias_coll.find({'codigo': codigo_materia}, {'_id': False})
+    return {'materia' : cursor[0]}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Optional[str] = None):
