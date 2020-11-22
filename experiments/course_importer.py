@@ -1,5 +1,6 @@
 import json
 from pymongo import MongoClient
+from Neo4jConnection import Neo4jConnection
 
 f = open('plan_de_carrera.json', 'r')
 
@@ -38,6 +39,9 @@ mongo = MongoClient('localhost:27017')
 mongodb = mongo['bd2tp']
 materias_coll = mongodb['materias']
 
+#conectando con neo4j
+neo4j = Neo4jConnection(uri='bolt://localhost:7687')
+
 materias = []
 correlativas = {}
 
@@ -74,5 +78,9 @@ for section in careerplan['section']:
         if section['withoutTerm']['withoutTerm']:
             parse_courses(section['withoutTerm']['withoutTerm'])
 
-result = materias_coll.insert_many(materias)
-print(result)
+#result = materias_coll.insert_many(materias)
+#print(result)
+
+q = "CREATE (a:Greeting) " + "SET a.message = 'hello world' " + "RETURN a.message + ', from node ' + id(a)"
+
+neo4j.query(q)
