@@ -34,7 +34,7 @@ careerplan = json.load(f)['careerplan']
 #}
 
 #conectando con mongo
-mongo = MongoClient('localhost:27017')
+mongo = MongoClient('localhost:27018')
 mongodb = mongo['bd2tp']
 materias_coll = mongodb['materias']
 

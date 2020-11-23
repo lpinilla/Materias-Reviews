@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from Neo4jConnection import Neo4jConnection
 
 #conectando con mongo
-mongo = MongoClient('localhost:27017')
+mongo = MongoClient('localhost:27018')
 mongodb = mongo['bd2tp']
 users_coll = mongodb['usuarios']
 
