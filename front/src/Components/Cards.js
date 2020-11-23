@@ -1,26 +1,25 @@
 import React from "react";
 import Card from "@material-ui/core/Card/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from '@material-ui/core/Grid';
-import CardHeader from '@material-ui/core/CardHeader';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import '../App.css';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import { 
+    CardContent, 
+    Typography, 
+    Button, 
+    Container, 
+    Grid, 
+    CardHeader, 
+    Table, 
+    TableBody, 
+    TableCell, 
+    TableRow,
+    TextField,
+    FormControl, 
+    InputLabel, 
+    MenuItem, 
+    Select
+} from '@material-ui/core';
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Modal from './common/Modal';
+import '../App.css';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -56,10 +55,6 @@ function Cards() {
     const handleRateChange = (event) => {
         setRate(event.target.value);
     };
-
-    const handleFullWidthChange = (event) => {
-        setFullWidth(event.target.checked);
-    };
     return (
         <Container maxWidth="md" component="main">
             <Grid container spacing={5} className="Grid">
@@ -67,8 +62,8 @@ function Cards() {
                     <Card align="top">
                         <CardHeader
                             title="Mis Materias"
-                            titleTypographyProps={{align: 'center'}}
-                            subheaderTypographyProps={{align: 'center'}} className="CardHeader"
+                            titleTypographyProps={{ align: 'center' }}
+                            subheaderTypographyProps={{ align: 'center' }} className="CardHeader"
                         />
                         <CardContent>
                             <Table size="small">
@@ -83,48 +78,37 @@ function Cards() {
                                             <Button className='Button' onClick={handleClickOpen}>
                                                 Rate and Comment
                                             </Button>
-                                            <Dialog open={open} onClose={handleClose}
-                                                    aria-labelledby="form-dialog-title">
-                                                <DialogTitle id="form-dialog-title">Puntua y Comenta </DialogTitle>
-                                                <DialogContent>
-                                                    <TextField
-                                                        autoFocus
-                                                        margin="dense"
-                                                        id="comment"
-                                                        label="Comentario"
-                                                        type="text"
-                                                        fullWidth
-                                                    />
-                                                    <form className={classes.form} noValidate>
-                                                        <FormControl className={classes.formControl}>
-                                                            <InputLabel>Puntuacion</InputLabel>
-                                                            <Select
-                                                                autoFocus
-                                                                onChange={handleRateChange}
-                                                                inputProps={{
-                                                                    name: 'rate',
-                                                                    id: 'rate',
-                                                                }}
-                                                            >
-                                                                <MenuItem value="1">Malo</MenuItem>
-                                                                <MenuItem value="2">Regular</MenuItem>
-                                                                <MenuItem value="3">Bueno</MenuItem>
-                                                                <MenuItem value="4">Muy Bueno</MenuItem>
-                                                                <MenuItem value="5">Excelente</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
+                                            <Modal open={open} handleClose={handleClose} title="Puntua y Comenta">
+                                                <TextField
+                                                    autoFocus
+                                                    margin="dense"
+                                                    id="comment"
+                                                    label="Comentario"
+                                                    type="text"
+                                                    fullWidth
+                                                />
+                                                <form className={classes.form} noValidate>
+                                                    <FormControl className={classes.formControl}>
+                                                        <InputLabel>Puntuacion</InputLabel>
+                                                        <Select
+                                                            autoFocus
+                                                            onChange={handleRateChange}
+                                                            inputProps={{
+                                                                name: 'rate',
+                                                                id: 'rate',
+                                                            }}
+                                                        >
+                                                            <MenuItem value="1">Malo</MenuItem>
+                                                            <MenuItem value="2">Regular</MenuItem>
+                                                            <MenuItem value="3">Bueno</MenuItem>
+                                                            <MenuItem value="4">Muy Bueno</MenuItem>
+                                                            <MenuItem value="5">Excelente</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
 
-                                                    </form>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                    <Button onClick={handleClose} color="primary">
-                                                        Cancelar
-                                                    </Button>
-                                                    <Button onClick={handleClose} color="primary">
-                                                        Aceptar
-                                                    </Button>
-                                                </DialogActions>
-                                            </Dialog>
+                                                </form>
+                                            </Modal>
+
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -141,8 +125,8 @@ function Cards() {
                     <Card>
                         <CardHeader
                             title="Mis Recomendaciones"
-                            titleTypographyProps={{align: 'center'}}
-                            subheaderTypographyProps={{align: 'center'}} className="CardHeader"
+                            titleTypographyProps={{ align: 'center' }}
+                            subheaderTypographyProps={{ align: 'center' }} className="CardHeader"
                         />
                         <CardContent>
                             <Table size="small">
