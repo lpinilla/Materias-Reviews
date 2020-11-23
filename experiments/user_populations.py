@@ -14,19 +14,19 @@ users = [
     {
         'nombre': 'gaston',
         'legajo': 12345,
-        'descripcion': None,
+        'descripcion': 'descripcion gaston',
         'foto': None
     },
     {
         'nombre': 'micaela',
         'legajo': 56789,
-        'descripcion': None,
+        'descripcion': 'descipcion micaela',
         'foto': None
     },
     {
         'nombre': 'lautaro',
         'legajo': 87643,
-        'descripcion': None,
+        'descripcion': 'descripcion lautaro',
         'foto': None
     }
 ]
@@ -37,13 +37,12 @@ users_coll.insert_many(users)
 #agregar nodos a neo
 for u in users:
     q = "CREATE (u:Usuario {{nombre:'{}', legajo:'{}'}});".format(u['nombre'], u['legajo'])
+    neo4j.query(q)
 
 #agregar las relaciones a neo
 u1 = users[0]['legajo']
 u2 = users[1]['legajo']
-q = "MATCH (u1:User {{legajo: '{}'}}), \
-           (u2:User {{legajo: '{}'}}}) \
-    CREATE (m1)-[r:amigoDe]->(m2),\
-    CREATE (m2)-[r:amigoDe]->(m1);\
+q = "MATCH (u1:Usuario {{legajo: '{}'}}), (u2:Usuario {{legajo: '{}'}}) \
+    CREATE (u1)-[:amigoDe]->(u2), (u2)-[:amigoDe]->(u1);\
     ".format(u1, u2)
 neo4j.query(q)
