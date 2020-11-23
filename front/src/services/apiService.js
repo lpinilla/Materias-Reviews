@@ -1,5 +1,8 @@
 import http from "./httpService";
 
 export function getSomething(something) {
-    return http.post(`/api/${something}`);
+    return http.get(`/api/${something}`);
+}
+export function getHelloWorld() {
+    return http.get(`/`);
 }

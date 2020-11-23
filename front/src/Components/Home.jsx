@@ -3,7 +3,7 @@ import Header from './Header';
 import Description from './Description';
 import Cards from './Cards';
 import Login from './Login';
-
+import { getHelloWorld } from '../services/apiService';
 export default 
 class Home extends Component {
     state={
@@ -11,6 +11,10 @@ class Home extends Component {
         name:'',
         lastName:'',
         selectedUser:false
+    }
+    componentDidMount = async () => {
+        const response = await getHelloWorld();
+        console.log(response.data);
     }
     renderLogin = () => {
         const { selectedUser, user_id: legajo } = this.state;
