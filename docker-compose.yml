@@ -16,6 +16,8 @@ services:
         - "8081:3000"
     volumes:
         - "$PWD/front:/app"
+    links:
+        - backend
   neo4j:
       image: "neo4j:latest"
       ports:
@@ -26,4 +28,4 @@ services:
   mongo:
       image: "mongo"
       ports:
-        - "27017:27017"
+        - "27018:27017"

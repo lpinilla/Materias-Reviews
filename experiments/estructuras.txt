@@ -34,6 +34,8 @@ usuarios = {
 
 usuarios-materias{user_id, [materias_id]} materias rateadas por un usuario
 
+usuarios -[wrote] - review -[references] -> materia : 
+
 materias-materias{course_id, [course_id]} materias correlativas
 
 usuarios-usuarios{user_id, [user_id]} usuarios que sigue este usuario

@@ -13,7 +13,7 @@ class UserID(BaseModel):
 app = FastAPI()
 
 #conectando con mongo
-mongo = MongoClient('mongo:27017')
+mongo = MongoClient('mongo:27018')
 mongodb = mongo['bd2tp']
 materias_coll = mongodb['materias']
 users_coll = mongodb['usuarios']
