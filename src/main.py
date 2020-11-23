@@ -17,7 +17,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:8080",
-    "http://localhost:8081",   
+    "http://localhost:8081",
 ]
 
 app.add_middleware(
@@ -33,6 +33,7 @@ mongo = MongoClient('mongo:27017')
 mongodb = mongo['bd2tp']
 materias_coll = mongodb['materias']
 users_coll = mongodb['usuarios']
+reviews_coll = mongodb['reviews']
 
 #conectando con neo4j
 neo4j = Neo4jConnection(uri='bolt://neo4j:7687')
@@ -68,6 +69,24 @@ def read_item(user_id: Optional[str] = None):
 
 ############################## REVIEWS #################################
 
+@app.get('/review/{codigo_materia})')
+def get_my_course_review(codigo_materia: str, user: UserID):
+    cursor = reviews_coll.find({'autor': user.user_id}, {'_id':False})
+
+@app.get('/review/{codigo_materia}/puntaje')
+def get_my_review_score(codigo_materia: str, user: UserID):
+    result = reviews_coll.find({'autor': str(user.user_id), 'referencia': codigo_materia}, {'_id':False, 'rating':True})
+    return {'puntaje': result[0]['rating']}
+
+@app.get('/review/{codigo_materia}/comentario')
+def get_my_review_comment(codigo_materia: str, user: UserID):
+    result = reviews_coll.find({'autor': str(user.user_id), 'referencia': codigo_materia}, {'_id':False, 'comentario':True})
+    return {'comentario': result[0]['comentario']}
+
+@app.get('/reviews')
+def get_my_reviews(user: UserID):
+    results = reviews_coll.find({'autor': str(user.user_id)},{'_id':False})
+    return {'mis_reviews': [rev for rev in results]}
 
 
 ############################## USUARIOS #################################

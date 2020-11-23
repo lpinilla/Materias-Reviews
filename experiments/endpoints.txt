@@ -15,8 +15,8 @@ GET /my_ratings?page=x : obtener los X primeros ratings que hice históricamente
 
 # cosas de seguidores ? (mejor mockear)
 
-GET /friends: devuelve la lista de todos los amigos. Necesita user_id como sessionCookie
+GET /friends: devuelve la lista de todos los amigos. Necesita recibir un json con user_id seteado
 
-GET /user?user_id : devolver información de un usuario
+GET /users/user_id : devolver información de un usuario
 
-POST /friend_request/?legajo : legajo del usuario al que vamos a amigar y necesita user_id como sessionCookie
+POST /users/user_id/friend_request : para enviar una solicitud de amistad hacia el usuario con user_id, espera también recibir un json con el user_id del usuario actual que está usando la aplicación
