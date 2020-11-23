@@ -14,22 +14,22 @@ class UserID(BaseModel):
 
 app = FastAPI()
 
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-    "http://localhost:8081",   
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+#origins = [
+#    "http://localhost",
+#    "http://localhost:8080",
+#    "http://localhost:8081",   
+#]
+#
+#app.add_middleware(
+#    CORSMiddleware,
+#    allow_origins=origins,
+#    allow_credentials=True,
+#    allow_methods=["*"],
+#    allow_headers=["*"],
+#)
 
 #conectando con mongo
-mongo = MongoClient('mongo:27018')
+mongo = MongoClient('mongo:27017')
 mongodb = mongo['bd2tp']
 materias_coll = mongodb['materias']
 users_coll = mongodb['usuarios']
