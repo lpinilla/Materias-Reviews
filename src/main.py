@@ -64,20 +64,18 @@ def get_user(legajo: int):
 
 @app.get('/friends')
 def get_friends(user: UserID):
-    q = "MATCH (u1:Usuario {{legajo: '{}'}}), (u2:Usuario) \
-        RETURN (u2)<-[:amigoDe]-(u1)".format(user.user_id)
+    q = "MATCH (u1:Usuario {{legajo: '{}'}})-[:amigoDe]->(u2:Usuario) \
+        RETURN u2".format(user.user_id)
     result = neo4j.query(q)
     return {'amigos': result}
 
-@app.post('/friend_request/{legajo}')
+@app.post('/users/{legajo}/friend_request')
 def add_friend(legajo: int, user: UserID):
-    q = "MATCH (u1:Usuario {{legajo: '{}'}}), \
-           (u2:Usuario {{legajo: '{}'}}}) \
-    CREATE (m1)-[r:amigoDe]->(m2),\
-    CREATE (m2)-[r:amigoDe]->(m1);\
-    ".format(user.user_id, legajo)
+    q = "MATCH (u1:Usuario {{legajo: '{}'}}), (u2:Usuario {{legajo: '{}'}}) \
+        CREATE (u1)-[:amigoDe]->(u2), (u2)-[:amigoDe]->(u1)\
+        RETURN u1, u2;".format(user.user_id, legajo)
     result = neo4j.query(q)
-    return {'friend_request_result': result}
+    return {'result': result}
 
 ############################## TESTING #################################
 
