@@ -15,11 +15,14 @@ review = {
     'autor': '87643',
     'rating': 5,
     'comentario': 'Materia escencial para la carrera',
-    'references': '72.08'
+    'referencia': '72.08'
 }
 
 #agregar la review a mongo
-review_coll.insert_one(review)
+#review_coll.insert_one(review)
 
-#agregar la review a neo
+#agregar la review a neo (arista con propiedad)
+q = "MATCH (u:Usuario {{legajo: '{}' }}), (m:Materia {{ codigo: '{}'}})\
+     CREATE (u)-[r:opina {{ puntaje: '{}' }}]->(m)".format(review['autor'], review['referencia'], review['rating'])
+neo4j.query(q)
 
