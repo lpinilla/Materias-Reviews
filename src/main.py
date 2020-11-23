@@ -12,6 +12,12 @@ from fastapi.middleware.cors import CORSMiddleware
 class UserID(BaseModel):
     user_id : int
 
+class Review(BaseModel):
+    user_id : int
+    puntaje: int
+    comentario: Optional[str] = None
+    codigo_materia: str
+
 app = FastAPI()
 
 origins = [
@@ -85,9 +91,23 @@ def get_my_review_comment(codigo_materia: str, user: UserID):
 
 @app.get('/reviews')
 def get_my_reviews(user: UserID):
-    results = reviews_coll.find({'autor': str(user.user_id)},{'_id':False})
+    results = reviews_coll.find({'autor': str(user.user_id)},{'_id':False, 'autor':False})
     return {'mis_reviews': [rev for rev in results]}
 
+@app.post('/review/add_review')
+def add_new_review(review: Review):
+    review = {
+    'autor': str(review.user_id),
+    'puntaje': str(review.puntaje),
+    'comentario': review.comentario,
+    'referencia': review.codigo_materia
+    }
+    #insertar a mongo
+    reviews_coll.insert_one(review)
+    #insertar a neo
+    q = "MATCH (u:Usuario {{legajo: '{}' }}), (m:Materia {{ codigo: '{}'}})         CREATE (u)-[r:opina {{ puntaje: '{}' }}]->(m)".format(review['autor'], review['referencia'], review['puntaje'])
+    neo4j.query(q)
+    return {'result': 'success'}
 
 ############################## USUARIOS #################################
 
@@ -117,4 +137,9 @@ def add_friend(legajo: int, user: UserID):
 @app.get('/jsontest')
 def reflecting_json_test(user: UserID):
     return {'test': user.user_id}
+
+
+# curl -i -H "Content-Type: application/json" --request POST --data '{"user_id": 87643, "puntaje":2, "comentario": null, "codigo_materia": "31.08" }' localhost:4444/review/add_review
+
+#curl -i -H "Content-Type: application/json" --request GET --data '{"user_id": 87643}' localhost:4444/reviews
 
