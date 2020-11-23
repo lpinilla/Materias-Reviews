@@ -89,9 +89,9 @@ def get_my_review_comment(codigo_materia: str, user: UserID):
     result = reviews_coll.find({'autor': str(user.user_id), 'referencia': codigo_materia}, {'_id':False, 'comentario':True})
     return {'comentario': result[0]['comentario']}
 
-@app.get('/reviews')
-def get_my_reviews(user: UserID):
-    results = reviews_coll.find({'autor': str(user.user_id)},{'_id':False, 'autor':False})
+@app.get('/reviews/{user_id}')
+def get_my_reviews(user_id: str):
+    results = reviews_coll.find({'autor': str(user_id)},{'_id':False, 'autor':False})
     return {'mis_reviews': [rev for rev in results]}
 
 @app.post('/review/add_review')
