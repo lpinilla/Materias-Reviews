@@ -68,6 +68,15 @@ def get_course(codigo_materia: str):
     cursor = materias_coll.find({'codigo': codigo_materia}, {'_id': False})
     return {'materia' : cursor[0]}
 
+
+@app.get('/course/{codigo_materia}/correlatives')
+def get_course_correlatives(codigo_materia: str):
+    q = "MATCH (m:Materia {{ codigo: '{}'}})-[:correlativaDe]->(m2:Materia)\
+         RETURN m2;".format(codigo_materia)
+    result = neo4j.query(q)
+    return {'correlativas': result}
+
+
 @app.get('/current_user_courses/{user_id}')
 def read_item(user_id: str):
     q = "MATCH (m:Materia), (u:Usuario {{ legajo: '{}'}})\
@@ -108,7 +117,11 @@ def add_new_review(review: Review):
     #insertar a mongo
     reviews_coll.insert_one(review)
     #insertar a neo
-    q = "MATCH (u:Usuario {{legajo: '{}' }}), (m:Materia {{ codigo: '{}'}})         CREATE (u)-[r:opina {{ puntaje: '{}' }}]->(m)".format(review['autor'], review['referencia'], review['puntaje'])
+    q = "MATCH (u:Usuario {{legajo: '{}' }}), (m:Materia {{ codigo: '{}'}}) \
+         CREATE (u)-[r:opina {{ puntaje: '{}' }}]->(m)".format(
+             review['autor'],
+             review['referencia'],
+             review['puntaje'])
     neo4j.query(q)
     return {'result': 'success'}
 
@@ -135,7 +148,7 @@ def add_friend(legajo: int, user: UserID):
     result = neo4j.query(q)
     return {'result': result}
 
-############################## TESTING ####################################
+########################### RECOMMENDATIONS ###############################
 
 @app.get('/recommendations')
 def get_recommendation(rec: RecommendationMinScore):
@@ -145,7 +158,7 @@ def get_recommendation(rec: RecommendationMinScore):
     result = neo4j.query(q)
     return {'recommendations': result}
 
-########################### RECOMMENDATIONS ###############################
+############################## TESTING ####################################
 
 @app.get('/jsontest')
 def reflecting_json_test(user: UserID):
