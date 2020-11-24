@@ -1,47 +1,27 @@
 import React from "react";
 import Card from "@material-ui/core/Card/Card";
-import { 
-    CardContent, 
-    Typography, 
-    Button, 
-    Container, 
-    Grid, 
-    CardHeader, 
-    Table, 
-    TableBody, 
-    TableCell, 
-    TableRow,
-    TextField,
-    FormControl, 
-    InputLabel, 
-    MenuItem, 
-    Select
+import {
+    CardContent,
+    Typography,
+    Button,
+    Container,
+    Grid,
+    CardHeader,
+    Table,
+    TableBody,
+    TableCell,
+    TableRow
 } from '@material-ui/core';
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Modal from './common/Modal';
 import '../App.css';
+import MyCards from "./common/MyCards";
 
-const useStyles = makeStyles((theme) => ({
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        margin: 'auto',
-        width: 'fit-content',
-    },
-    formControl: {
-        marginTop: theme.spacing(2),
-        minWidth: 120,
-    },
-    formControlLabel: {
-        marginTop: theme.spacing(1),
-    },
-}));
 
 function Cards() {
+
     const [open, setOpen] = React.useState(false);
-    const classes = useStyles();
-    // const [open, setOpen] = React.useState(false);
-    const [fullWidth, setFullWidth] = React.useState(true);
+    const [openCom, setOpenCom] = React.useState(false);
+    const [openCour, setOpenCour] = React.useState(false);
     const [rate, setRate] = React.useState('sm');
 
     const handleClickOpen = () => {
@@ -50,6 +30,23 @@ function Cards() {
 
     const handleClose = () => {
         setOpen(false);
+        setOpenCour(false);
+        setOpenCom(false);
+    };
+
+    // const handleComClose = () => {
+    //     setOpenCom(false);
+    // };
+
+    const handleComClickOpen = () => {
+        setOpenCom(true);
+    };
+
+    // const handleCourClose = () => {
+    //     setOpenCour(false);
+    // };
+    const handleCourClickOpen = () => {
+        setOpenCour(true);
     };
 
     const handleRateChange = (event) => {
@@ -75,40 +72,12 @@ function Cards() {
                                             </Typography>
                                         </TableCell>
                                         <TableCell>
-                                            <Button className='Button' onClick={handleClickOpen}>
+                                            <Button className='Button' onClick={handleCourClickOpen}>
                                                 Rate and Comment
                                             </Button>
-                                            <Modal open={open} handleClose={handleClose} title="Puntua y Comenta">
-                                                <TextField
-                                                    autoFocus
-                                                    margin="dense"
-                                                    id="comment"
-                                                    label="Comentario"
-                                                    type="text"
-                                                    fullWidth
-                                                />
-                                                <form className={classes.form} noValidate>
-                                                    <FormControl className={classes.formControl}>
-                                                        <InputLabel>Puntuacion</InputLabel>
-                                                        <Select
-                                                            autoFocus
-                                                            onChange={handleRateChange}
-                                                            inputProps={{
-                                                                name: 'rate',
-                                                                id: 'rate',
-                                                            }}
-                                                        >
-                                                            <MenuItem value="1">Malo</MenuItem>
-                                                            <MenuItem value="2">Regular</MenuItem>
-                                                            <MenuItem value="3">Bueno</MenuItem>
-                                                            <MenuItem value="4">Muy Bueno</MenuItem>
-                                                            <MenuItem value="5">Excelente</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
+                                            <Modal open={openCour} handleClose={handleClose} title="Puntua y Comenta" cancel={true} children={false} rateChange={handleRateChange}>
 
-                                                </form>
                                             </Modal>
-
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -121,54 +90,20 @@ function Cards() {
                         {/*</CardActions>*/}
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                        <CardHeader
-                            title="Mis Recomendaciones"
-                            titleTypographyProps={{ align: 'center' }}
-                            subheaderTypographyProps={{ align: 'center' }} className="CardHeader"
-                        />
-                        <CardContent>
-                            <Table size="small">
-                                <TableBody>
-                                    {/*TODO: for con las materias*/}
-                                    <TableRow>
-                                        <TableCell>
-                                            <Typography variant="h6" color="textSecondary" align="left">
-                                                Matematica
-                                            </Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>
-                                            <Typography variant="h6" color="textSecondary" align="left">
-                                                Simulacion de sistemas
-                                            </Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>
-                                            <Typography variant="h6" color="textSecondary" align="left">
-                                                Derecho
-                                            </Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </CardContent>
-                    </Card>
-                </Grid>
+                {/*<MyCards open={openCour} handleOpen={handleCourClickOpen()} handleClose={handleClose()}*/}
+                {/*         title="Mis Materias" write buttonText="Rate and Comment"/>*/}
+
+                <MyCards open={open} title="Mis Materias Recomendadas"/>
+
+                <MyCards open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
+                         title="Mis Comentarios" buttonText="Ver Comentarios" cancel={false} children={true}/>
+                <MyCards open={open} handleOpen={handleClickOpen} handleClose={handleClose} title="Todas las Materias"
+                         buttonText="Ver Comentarios" cancel={false} children={true}/>
 
             </Grid>
         </Container>
     )
 }
 
-
-const courses = [
-    {
-        names: ['Mate', 'Analisis', 'Blabla']
-    }
-];
 
 export default Cards

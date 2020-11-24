@@ -65,6 +65,7 @@
 .Typography{
   font-weight: 200!important;
   font-size: 50px!important;
+
 }
 
 .Grid{
@@ -77,7 +78,33 @@
   max-width: fit-content!important;
 }
 
+
 .CardHeader{
   background-color: #eeeeee;
 }
+
+.Link {
+  margin: 8px 12px!important;
+}
+
+.ToolBar{
+  flex-wrap: wrap !important;
+}
+
+.Logo{
+  flex-grow: 1 !important;
+}
+
+.Form{
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+}
+.FormControl {
+  margin-top: 20px;
+  min-width: 120px;
+
+}
+
+
 

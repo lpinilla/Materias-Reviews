@@ -1,7 +1,7 @@
 import React from "react";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
-import Home from "./Components/Home";
+import Home from "./Components/Home"
 
 export const COLORS = {
   white: '#fff',
@@ -60,7 +60,6 @@ export default function App() {
       <React.Fragment>
         <CssBaseline />
         <Home />
-
       {/*<Footer classes="classes"/>*/}
       </React.Fragment>
   );
