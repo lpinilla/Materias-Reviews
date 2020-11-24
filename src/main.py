@@ -87,9 +87,15 @@ def read_item(user_id: str):
 
 ############################## REVIEWS #################################
 
-@app.get('/review/{codigo_materia})')
+@app.get('/review/{codigo_materia}/general')
+def get_general_course_revies(codigo_materia: str):
+    cursor = reviews_coll.find({'referencia': codigo_materia}, {'_id':False})
+    return {'reviews': [r for r in cursor]}
+
+@app.get('/review/{codigo_materia}')
 def get_my_course_review(codigo_materia: str, user: UserID):
     cursor = reviews_coll.find({'autor': user.user_id}, {'_id':False})
+    return {'mis_reviews': [r for r in cursor]}
 
 @app.get('/review/{codigo_materia}/puntaje')
 def get_my_review_score(codigo_materia: str, user: UserID):
