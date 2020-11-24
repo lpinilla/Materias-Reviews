@@ -12,11 +12,16 @@ from fastapi.middleware.cors import CORSMiddleware
 class UserID(BaseModel):
     user_id : int
 
+#declarando objeto Review
 class Review(BaseModel):
     user_id : int
     puntaje: int
     comentario: Optional[str] = None
     codigo_materia: str
+
+class RecommendationMinScore(BaseModel):
+    user_id : int
+    min_score : Optional[int] = 0
 
 app = FastAPI()
 
@@ -47,7 +52,7 @@ neo4j = Neo4jConnection(uri='bolt://neo4j:7687')
 
 @app.get("/")
 def read_root():
-    return {"Hello": "wold"}
+    return {"Hello": "world"}
 
 
 ############################## MATERIAS #################################
@@ -132,7 +137,17 @@ def add_friend(legajo: int, user: UserID):
     result = neo4j.query(q)
     return {'result': result}
 
-############################## TESTING #################################
+############################## TESTING ####################################
+
+@app.get('/recommendations')
+def get_recommendation(rec: RecommendationMinScore):
+    q = "MATCH (u1:Usuario {{legajo: '{}'}})-[:amigoDe]->(u2:Usuario)-[o:opina]->(m:Materia) \
+         WHERE o.puntaje > '{}' \
+         RETURN m;".format(rec.user_id, rec.min_score)
+    result = neo4j.query(q)
+    return {'recommendations': result}
+
+########################### RECOMMENDATIONS ###############################
 
 @app.get('/jsontest')
 def reflecting_json_test(user: UserID):
@@ -143,3 +158,4 @@ def reflecting_json_test(user: UserID):
 
 #curl -i -H "Content-Type: application/json" --request GET --data '{"user_id": 87643}' localhost:4444/reviews
 
+#curl -i -H "Content-Type: application/json" --request GET --data '{"user_id": 12345, "min_score": 3}' localhost:4444/recommendations
