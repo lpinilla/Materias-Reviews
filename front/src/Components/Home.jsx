@@ -3,7 +3,7 @@ import Header from './Header';
 import Description from './Description';
 import Cards from './Cards';
 import Login from './Login';
-import { getHelloWorld } from '../services/apiService';
+import { getHelloWorld, getUser } from '../services/apiService';
 export default 
 class Home extends Component {
     state={
@@ -32,7 +32,9 @@ class Home extends Component {
                         const { value: user_id } = event.target;
                         this.setState({ user_id })
                     }} 
-                    submitUser={() => this.setState({ selectedUser: true })}
+                    submitUser={async () => {
+                        this.setState({ selectedUser: true });
+                    }}
             />)
         }
     }

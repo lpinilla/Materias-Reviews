@@ -68,10 +68,8 @@ def get_course(codigo_materia: str):
     cursor = materias_coll.find({'codigo': codigo_materia}, {'_id': False})
     return {'materia' : cursor[0]}
 
-@app.get('/current_user_courses')
-def read_item(user_id: Optional[str] = None):
-    if not user_id:
-        return {'Error': 'user_id cookie not set'}
+@app.get('/current_user_courses/{user_id}')
+def read_item(user_id: str):
     q = "MATCH (m:Materia), (u:Usuario {{ legajo: '{}'}})\
          RETURN (u)-[:cursando]->(m)".format(user_id)
     result = neo4j.query(q)
@@ -94,9 +92,9 @@ def get_my_review_comment(codigo_materia: str, user: UserID):
     result = reviews_coll.find({'autor': str(user.user_id), 'referencia': codigo_materia}, {'_id':False, 'comentario':True})
     return {'comentario': result[0]['comentario']}
 
-@app.get('/reviews')
-def get_my_reviews(user: UserID):
-    results = reviews_coll.find({'autor': str(user.user_id)},{'_id':False, 'autor':False})
+@app.get('/reviews/{user_id}')
+def get_my_reviews(user_id: str):
+    results = reviews_coll.find({'autor': str(user_id)},{'_id':False, 'autor':False})
     return {'mis_reviews': [rev for rev in results]}
 
 @app.post('/review/add_review')
@@ -122,10 +120,10 @@ def get_user(legajo: int):
     return {'usuario' : cursor[0]}
 
 
-@app.get('/friends')
-def get_friends(user: UserID):
+@app.get('/friends/{user_id}')
+def get_friends(user_id: str):
     q = "MATCH (u1:Usuario {{legajo: '{}'}})-[:amigoDe]->(u2:Usuario) \
-        RETURN u2".format(user.user_id)
+        RETURN u2".format(user_id)
     result = neo4j.query(q)
     return {'amigos': result}
 
