@@ -49,7 +49,8 @@ export default class Home extends Component {
                     submitUser={async () => {
                         this.setState({selectedUser: true});
                     }}
-                />)
+                />
+            );
         }
     }
 
