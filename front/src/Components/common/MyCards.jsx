@@ -6,11 +6,10 @@ import {
     Table, TableBody, TableRow, TableCell, Typography, Grid
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
-
 import Modal from "./Modal";
 
-export default function MyCards({open, handleOpen, handleClose, title, buttonText, cancel, write, handleRateChange,children}) {
-
+export default function MyCards({open, handleOpen, handleClose, title, buttonText, cancel, children, inside}) {
+    console.log(inside);
     return (
         <Grid item xs={12} sm={6} md={4} className="Card">
             <Card align="top">
@@ -22,22 +21,27 @@ export default function MyCards({open, handleOpen, handleClose, title, buttonTex
                 <CardContent>
                     <Table size="small">
                         <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                    <Typography variant="h6" color="textSecondary" align="left">
-                                        hola
-                                    </Typography>
-                                </TableCell>
-                                {buttonText ? (
-                                    <TableCell>
-                                        <Button className='Button' onClick={handleOpen}>
-                                            {buttonText}
-                                        </Button>
-                                        <Modal open={open} handleClose={handleClose} title={title} cancel={cancel} children={children}>
-                                        </Modal>
-                                    </TableCell>
-                                ) : (<div></div>)}
-                            </TableRow>
+                            {inside===undefined?null:inside.map((e, key) => {
+                                    return(
+                                        <TableRow key={key}>
+                                            <TableCell>
+                                                <Typography variant="h6" color="textSecondary" align="left">
+                                                    {e.nombre}
+                                                </Typography>
+                                            </TableCell>
+                                            {buttonText ? (
+                                                <TableCell>
+                                                    <Button className='Button' onClick={handleOpen}>
+                                                        {buttonText}
+                                                    </Button>
+                                                    <Modal open={open} handleClose={handleClose} title={title} cancel={cancel} children={children}>
+                                                    </Modal>
+                                                </TableCell>
+                                            ) : (<div></div>)}
+                                        </TableRow>
+                                    );
+                                }
+                            )}
                         </TableBody>
                     </Table>
                 </CardContent>
@@ -50,3 +54,4 @@ export default function MyCards({open, handleOpen, handleClose, title, buttonTex
         </Grid>
     )
 }
+

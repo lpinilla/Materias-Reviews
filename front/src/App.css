@@ -78,6 +78,9 @@
   max-width: fit-content!important;
 }
 
+.CardAll{
+  width: max-content!important;
+}
 
 .CardHeader{
   background-color: #eeeeee;

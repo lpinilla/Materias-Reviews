@@ -8,18 +8,17 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 
 export default function Modal({open, handleClose, title, children, cancel,rateChange}) {
-
     return (
         <Dialog open={open} onClose={handleClose}
                 aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">{title} </DialogTitle>
+            <DialogTitle id="form-dialog-title">Logica </DialogTitle>
             <DialogContent>
                 {children ? (
                     <div>
                         <TextField
                             id="comment"
                             label="Comentarios"
-                            defaultValue="Comentario"
+                            defaultValue="Muy interesante"
                             InputProps={{
                                 readOnly: true,
                             }}
@@ -28,7 +27,7 @@ export default function Modal({open, handleClose, title, children, cancel,rateCh
                         <TextField
                             id="rate"
                             label="Puntaje"
-                            defaultValue="Puntaje"
+                            defaultValue="Muy Buena"
                             InputProps={{
                                 readOnly: true,
                             }}
