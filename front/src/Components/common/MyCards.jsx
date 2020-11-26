@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
     Button,
     CardHeader,
@@ -8,10 +8,16 @@ import {
 import Card from "@material-ui/core/Card/Card";
 import Modal from "./Modal";
 
-export default function MyCards({open,handleOpen,handleClose,title, buttonText, cancel, children, inside}) {
-    if(inside !== undefined)
-        var { materias } = inside.courses;
-
+export default class MyCards extends Component {
+    //props: {open,handleOpen,handleClose,title, buttonText, cancel, children, inside}
+    // if(inside !== undefined)
+    //     var { materias } = inside.courses;
+    
+    state={
+        modal:false,
+        payload: null
+    }
+    
     // const [open, setOpen] = React.useState(false);
 
     // let state = {
@@ -39,50 +45,55 @@ export default function MyCards({open,handleOpen,handleClose,title, buttonText, 
 
 
     // let { open } = this.state;
-
-    return (
-        <Grid item xs={12} sm={6} md={4} className="Card">
-            <Card align="top">
-                <CardHeader
-                    title={title}
-                    titleTypographyProps={{align: 'center'}}
-                    subheaderTypographyProps={{align: 'center'}} className="CardHeader"
-                />
-                <CardContent>
-                    <Table size="small">
-                        <TableBody>
-                            {inside===undefined?null:materias.map((e, key) => {
-                                    return(
-                                        <TableRow key={key}>
-                                            <TableCell>
-                                                <Typography variant="h6" color="textSecondary" align="left">
-                                                    {e.nombre}
-                                                </Typography>
-                                            </TableCell>
-                                            {buttonText ? (
+    render(){
+        console.log(this.props);
+        const { inside, title, buttonText, cancel, children } = this.props;
+        return (
+            <Grid item xs={12} sm={6} md={4} className="Card">
+                <Card align="top">
+                    <CardHeader
+                        title={title}
+                        titleTypographyProps={{align: 'center'}}
+                        subheaderTypographyProps={{align: 'center'}} className="CardHeader"
+                    />
+                    <CardContent>
+                        <Table size="small">
+                            <TableBody>
+                                {inside===undefined?null:inside.courses.materias.map((e, key) => {
+                                        return(
+                                            <TableRow key={key}>
                                                 <TableCell>
-                                                    <Button className='Button' onClick={handleOpen}>
-                                                        {buttonText}
-                                                    </Button>
-                                                    <Modal open={open} handleClose={handleClose} title={title} cancel={cancel} children={children}>
-                                                    </Modal>
+                                                    <Typography variant="h6" color="textSecondary" align="left">
+                                                        {e.nombre}
+                                                    </Typography>
                                                 </TableCell>
-                                            ) : (<div></div>)}
-                                        </TableRow>
-                                    );
-                                }
-                            )}
-                        </TableBody>
-                    </Table>
-                </CardContent>
-
-                {/*<CardActions>*/}
-                {/*    <Button fullWidth variant={tier.buttonVariant} color="primary">*/}
-                {/*        {tier.buttonText}*/}
-                {/*    </Button>*/}
-                {/*</CardActions>*/}
-            </Card>
-        </Grid>
-    )
+                                                {buttonText ? (
+                                                    <TableCell>
+                                                        <Button className='Button' onClick={() => {
+                                                            console.log(e);
+                                                            this.setState({ payload: e, modal:true })
+                                                        }}>
+                                                            {buttonText}
+                                                        </Button>
+                                                    </TableCell>
+                                                ) : (<div></div>)}
+                                            </TableRow>
+                                        );
+                                    }
+                                )}
+                                <Modal open={this.state.modal} handleClose={() => this.setState({ modal: false })} title={title} cancel={cancel} children={children} />
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+    
+                    {/*<CardActions>*/}
+                    {/*    <Button fullWidth variant={tier.buttonVariant} color="primary">*/}
+                    {/*        {tier.buttonText}*/}
+                    {/*    </Button>*/}
+                    {/*</CardActions>*/}
+                </Card>
+            </Grid>
+        )
+    }
 }
 
