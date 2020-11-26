@@ -8,10 +8,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 
 export default function Modal({open, handleClose, title, children, cancel,rateChange}) {
+
     return (
         <Dialog open={open} onClose={handleClose}
                 aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Logica </DialogTitle>
+            <DialogTitle id="form-dialog-title">{title} </DialogTitle>
             <DialogContent>
                 {children ? (
                     <div>

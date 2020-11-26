@@ -17,8 +17,8 @@ import '../App.css';
 import MyCards from "./common/MyCards";
 
 
-function Cards(courses) {
-    console.log(courses)
+function Cards(courses, myCourses, myReviews) {
+    console.log(myReviews)
     const [open, setOpen] = React.useState(false);
     const [openCom, setOpenCom] = React.useState(false);
     const [openCour, setOpenCour] = React.useState(false);
@@ -97,8 +97,9 @@ function Cards(courses) {
 
                 <MyCards open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
                          title="Mis Comentarios" buttonText="Ver Comentarios" cancel={false} children={true}/>
-                <MyCards open={open} handleOpen={handleClickOpen} handleClose={handleClose} title="Todas las Materias"
-                         buttonText="Ver Comentarios" cancel={false} children={true} inside={courses}/>
+
+                <MyCards  open ={open} title="Todas las Materias"  handleOpen={handleClickOpen} handleClose={handleClose}
+                         buttonText="Ver Comentarios" cancel={false} children={true} inside={courses} />
 
             </Grid>
         </Container>

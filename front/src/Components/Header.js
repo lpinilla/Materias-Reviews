@@ -10,9 +10,11 @@ import Button from "@material-ui/core/Button";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
+import {getHelloWorld, getUser} from "../services/apiService";
 
 
-function Header() {
+function Header({user, selectedUser}) {
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -22,6 +24,12 @@ function Header() {
     const handleClose = () => {
         setOpen(false);
     };
+    if (user !== undefined)
+        var usuario = user.usuario;
+
+
+
+    console.log("header",selectedUser,usuario)
 
 
     return (
@@ -33,39 +41,43 @@ function Header() {
                 {/*TOOD: si el usuario no esta login, no mostrar*/}
 
                 <nav>
-                    <Link variant="button" color="textPrimary" href="#" className="Link" onClick={handleClickOpen}>
-                        Mi Usuario
-                    </Link>
-                    <Dialog open={open} onClose={handleClose}
-                            aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Mis usuario </DialogTitle>
-                        <DialogContent>
-                            <TextField
-                                id="name"
-                                label="Nombre y Apellido"
-                                defaultValue="User name"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                                fullWidth
-                            />
-                            <TextField
-                                id="name"
-                                label="Legajo"
-                                defaultValue="User name"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                                fullWidth
-                            />
+                    {usuario!==undefined ? (
+                        <div>
+                            <Link variant="button" color="textPrimary" href="#" className="Link"
+                                  onClick={handleClickOpen}>
+                                Mi Usuario
+                            </Link>
+                            <Dialog open={open} onClose={handleClose}
+                                    aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">Mis usuario </DialogTitle>
+                                <DialogContent>
+                                    <TextField
+                                        id="name"
+                                        label="Nombre y Apellido"
+                                        defaultValue={usuario ===undefined? '': usuario.nombre}
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                        fullWidth
+                                    />
+                                    <TextField
+                                        id="name"
+                                        label="Legajo"
+                                        defaultValue={usuario ===undefined? '': usuario.legajo}
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                        fullWidth
+                                    />
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleClose} color="primary">
+                                        Cerrar
+                                    </Button>
+                                </DialogActions>
+                            </Dialog></div>) : (<div></div>)}
 
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Cerrar
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
+
                 </nav>
             </Toolbar>
 
