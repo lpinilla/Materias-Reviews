@@ -8,13 +8,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 
 export default function Modal({open, handleClose, title, children, cancel,rateChange}) {
-
+    console.log(children)
     return (
         <Dialog open={open} onClose={handleClose}
                 aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">{title} </DialogTitle>
             <DialogContent>
-                {children ? (
+                {children/* ? (
                     <div>
                         <TextField
                             id="comment"
@@ -63,7 +63,7 @@ export default function Modal({open, handleClose, title, children, cancel,rateCh
                             </Select>
                         </FormControl>
                     </form>
-                </div>)}
+                </div>)*/}
 
             </DialogContent>
             <DialogActions>

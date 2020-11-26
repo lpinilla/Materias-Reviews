@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
 import Modal from "./Modal";
+import {getAllReviews} from '../../services/apiService';
 
 export default class MyCards extends Component {
     //props: {open,handleOpen,handleClose,title, buttonText, cancel, children, inside}
@@ -15,7 +16,12 @@ export default class MyCards extends Component {
     
     state={
         modal:false,
-        payload: null
+        payload: {
+            codigo:'',
+            nombre:'',
+            creditos:''
+        },
+        reviews:[]
     }
     
     // const [open, setOpen] = React.useState(false);
@@ -42,7 +48,13 @@ export default class MyCards extends Component {
     // let onCloseModal = () => {
     //     this.setState({ open: false });
     // };
-
+    renderCommentsForSubject = async (e) => {
+        const { codigo } = e;
+        const response = await getAllReviews(codigo);
+        console.log(response)
+        const { reviews } = response.data;
+        this.setState({ reviews:reviews, modal:true, payload:e });
+    }
 
     // let { open } = this.state;
     render(){
@@ -69,9 +81,8 @@ export default class MyCards extends Component {
                                                 </TableCell>
                                                 {buttonText ? (
                                                     <TableCell>
-                                                        <Button className='Button' onClick={() => {
-                                                            console.log(e);
-                                                            this.setState({ payload: e, modal:true })
+                                                        <Button className='Button' onClick={async () => {
+                                                            this.renderCommentsForSubject(e);
                                                         }}>
                                                             {buttonText}
                                                         </Button>
@@ -81,7 +92,12 @@ export default class MyCards extends Component {
                                         );
                                     }
                                 )}
-                                <Modal open={this.state.modal} handleClose={() => this.setState({ modal: false })} title={title} cancel={cancel} children={children} />
+                                <Modal open={this.state.modal} handleClose={() => this.setState({ modal: false })} title={title} cancel={cancel}>
+                                    {this.state.reviews.map((e, idx) => {
+                                        console.log(e);
+                                        return(<div key={idx}> Materia: {e.comentario} </div>)
+                                    })}
+                                </Modal>
                             </TableBody>
                         </Table>
                     </CardContent>
