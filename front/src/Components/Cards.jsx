@@ -17,7 +17,7 @@ import '../App.css';
 import MyCards from "./common/MyCards";
 
 
-function Cards(courses, myCourses, myReviews) {
+function Cards(courses, myCourses, myReviews, myRecom) {
     console.log(myReviews)
     const [open, setOpen] = React.useState(false);
     const [openCom, setOpenCom] = React.useState(false);
@@ -93,10 +93,10 @@ function Cards(courses, myCourses, myReviews) {
                 {/*<MyCards open={openCour} handleOpen={handleCourClickOpen()} handleClose={handleClose()}*/}
                 {/*         title="Mis Materias" write buttonText="Rate and Comment"/>*/}
 
-                <MyCards open={open} title="Mis Materias Recomendadas"/>
+                <MyCards open={open} title="Mis Materias Recomendadas" handleOpen={handleClickOpen} handleClose={handleClose} inside={myRecom}/>
 
                 <MyCards open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
-                         title="Mis Comentarios" buttonText="Ver Comentarios" cancel={false} children={true}/>
+                         title="Mis Comentarios" buttonText="Ver Comentarios" cancel={false} children={true} inside={myReviews}/>
 
                 <MyCards  open ={open} title="Todas las Materias"  handleOpen={handleClickOpen} handleClose={handleClose}
                          buttonText="Ver Comentarios" cancel={false} children={true} inside={courses} />

@@ -23,6 +23,7 @@ export default class MyCards extends Component {
         },
         reviews:[]
     }
+
     
     // const [open, setOpen] = React.useState(false);
 
@@ -92,10 +93,19 @@ export default class MyCards extends Component {
                                         );
                                     }
                                 )}
-                                <Modal open={this.state.modal} handleClose={() => this.setState({ modal: false })} title={title} cancel={cancel}>
+                                <Modal open={this.state.modal} handleClose={() => this.setState({ modal: false })} data={this.state.payload} cancel={cancel}>
                                     {this.state.reviews.map((e, idx) => {
                                         console.log(e);
-                                        return(<div key={idx}> Materia: {e.comentario} </div>)
+                                        return(
+                                            <div key={idx}>
+                                                <div>
+                                                    Comentario : {e.comentario}
+                                                </div>
+                                                <div>
+                                                   Puntaje : {e.rating}
+                                                </div>
+                                            </div>)
+
                                     })}
                                 </Modal>
                             </TableBody>

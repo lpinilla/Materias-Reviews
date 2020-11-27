@@ -16,7 +16,7 @@ export function getMyCourses(userID) {
 }
 
 //Reviews
-'/review/{codigo_materia}/general'
+// '/review/{codigo_materia}/general'
 export function getAllReviews(subject) {
     return http.get(`/review/${subject}/general`);
 }

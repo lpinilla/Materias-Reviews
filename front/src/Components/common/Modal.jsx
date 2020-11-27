@@ -7,12 +7,17 @@ import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
 
 
-export default function Modal({open, handleClose, title, children, cancel,rateChange}) {
-    console.log(children)
+export default function Modal({open, handleClose, data, children, cancel,rateChange}) {
+    console.log(data);
+    let nombre;
+    if(data!==undefined){
+        nombre=data.nombre;
+    }
+    console.log(nombre)
     return (
         <Dialog open={open} onClose={handleClose}
                 aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">{title} </DialogTitle>
+            <DialogTitle id="form-dialog-title">{nombre} </DialogTitle>
             <DialogContent>
                 {children/* ? (
                     <div>
