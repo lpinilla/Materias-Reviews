@@ -7,69 +7,45 @@ import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
 
 
-export default function Modal({open, handleClose, data, children, cancel,rateChange}) {
-    console.log(data);
-    let nombre;
-    if(data!==undefined){
-        nombre=data.nombre;
-    }
-    console.log(nombre)
+export default function Modal({open, handleClose, data, children, cancel, rateChange}) {
+    // let nombre;
+    // if (data !== undefined) {
+    //     nombre = data.nombre;
+    // }
     return (
         <Dialog open={open} onClose={handleClose}
                 aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">{nombre} </DialogTitle>
+            <DialogTitle id="form-dialog-title">{data} </DialogTitle>
             <DialogContent>
-                {children/* ? (
-                    <div>
-                        <TextField
-                            id="comment"
-                            label="Comentarios"
-                            defaultValue="Muy interesante"
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                            fullWidth
-                        />
-                        <TextField
-                            id="rate"
-                            label="Puntaje"
-                            defaultValue="Muy Buena"
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                            fullWidth
-                        />
-                    </div>
-                ) : (<div>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="comment"
-                        label="Comentario"
-                        type="text"
-                        fullWidth
-                    />
-                    <form className="Form" noValidate>
-                        <FormControl className="FormControl">
-                            <InputLabel>Puntuacion</InputLabel>
-                            <Select
-                                autoFocus
-                                onChange={rateChange}
-                                inputProps={{
-                                    name: 'rate',
-                                    id: 'rate',
-                                }}
-                            >
-                                <MenuItem value="1">Malo</MenuItem>
-                                <MenuItem value="2">Regular</MenuItem>
-                                <MenuItem value="3">Bueno</MenuItem>
-                                <MenuItem value="4">Muy Bueno</MenuItem>
-                                <MenuItem value="5">Excelente</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </form>
-                </div>)*/}
-
+                {/*<div>*/}
+                {/*    <TextField*/}
+                {/*        autoFocus*/}
+                {/*        margin="dense"*/}
+                {/*        id="comment"*/}
+                {/*        label="Comentario"*/}
+                {/*        type="text"*/}
+                {/*        fullWidth*/}
+                {/*    />*/}
+                {/*    <form className="Form" noValidate>*/}
+                {/*        <FormControl className="FormControl">*/}
+                {/*            <InputLabel>Puntuacion</InputLabel>*/}
+                {/*            <Select*/}
+                {/*                autoFocus*/}
+                {/*                onChange={rateChange}*/}
+                {/*                inputProps={{*/}
+                {/*                    name: 'rate',*/}
+                {/*                    id: 'rate',*/}
+                {/*                }}*/}
+                {/*            >*/}
+                {/*                <MenuItem value="1">Malo</MenuItem>*/}
+                {/*                <MenuItem value="2">Regular</MenuItem>*/}
+                {/*                <MenuItem value="3">Bueno</MenuItem>*/}
+                {/*                <MenuItem value="4">Muy Bueno</MenuItem>*/}
+                {/*                <MenuItem value="5">Excelente</MenuItem>*/}
+                {/*            </Select>*/}
+                {/*        </FormControl>*/}
+                {/*    </form>*/}
+                {/*</div>*/}
             </DialogContent>
             <DialogActions>
                 {cancel ? (

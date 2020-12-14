@@ -14,24 +14,26 @@ export default class Home extends Component {
         selectedUser: false,
         courses: [],
         myCourses: [],
-        myReviews: []
+        myReviews: [],
+        myRecom: []
     }
 
     componentDidMount = async () => {
-        const response = await getHelloWorld();
-        const response1 = await getAllCourses();
-        this.setState({courses: response1.data});
+        const response = await getAllCourses();
+        this.setState({courses: response.data});
         // const user = await getUser(this.state.user_id);
-
     }
 
 
     renderLogin = () => {
         const {selectedUser, user_id: legajo} = this.state;
+        console.log("my reviews", this.state.myReviews)
+
         if (selectedUser) {
             return (
                 <div>
-                    <Cards courses={this.state.courses} myCourses={this.state.myCourses} myReviews={this.state.myReviews}/>
+                    <Cards courses={this.state.courses} myCourses={this.state.myCourses}
+                           myReviews={this.state.myReviews} user={this.state.user}/>
                 </div>
             );
         } else {
@@ -40,19 +42,19 @@ export default class Home extends Component {
                     value={legajo}
                     handleChange={(event) => {
                         const {value: user_id} = event.target;
-                        this.setState({user_id:user_id});
+                        this.setState({user_id: user_id});
                     }}
                     submitUser={async () => {
-                        if (this.state.user_id!=="") {
+                        if (this.state.user_id !== "") {
                             this.setState({selectedUser: true});
                             const id = parseInt(this.state.user_id, 10);
                             const user = await getUser(id);
                             this.setState({user: user.data});
                             this.setState({myCourses:getMyCourses(this.state.user_id)});
                             this.setState({myReviews:getMyReviews(this.state.user_id)});
-                        }
-                        else {
-                            console.log("entro");
+
+                        } else {
+
                             // const id = parseInt(this.state.user_id, 10);
                             // const user = await getUser(0);
                             this.setState({user: ''});
@@ -69,6 +71,7 @@ export default class Home extends Component {
             <div>
                 <Header user={this.state.user} selectedUser={this.state.selectedUser}/>
                 <Description/>
+
                 {/*<Cards courses={this.state.courses}/>*/}
                 {this.renderLogin()}
 

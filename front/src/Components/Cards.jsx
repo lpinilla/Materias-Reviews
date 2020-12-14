@@ -15,10 +15,14 @@ import {
 import Modal from './common/Modal';
 import '../App.css';
 import MyCards from "./common/MyCards";
+import RateAndComment from "./RateAndComment";
+import ViewComments from "./ViewComments";
+import MyRecomendations from "./MyRecomendations";
+import MyCourses from "./MyCourses";
 
 
-function Cards(courses, myCourses, myReviews, myRecom) {
-    console.log(myReviews)
+function Cards(courses,myCourses, myReviews, myRecom,user) {
+
     const [open, setOpen] = React.useState(false);
     const [openCom, setOpenCom] = React.useState(false);
     const [openCour, setOpenCour] = React.useState(false);
@@ -34,17 +38,10 @@ function Cards(courses, myCourses, myReviews, myRecom) {
         setOpenCom(false);
     };
 
-    // const handleComClose = () => {
-    //     setOpenCom(false);
-    // };
 
     const handleComClickOpen = () => {
         setOpenCom(true);
     };
-
-    // const handleCourClose = () => {
-    //     setOpenCour(false);
-    // };
     const handleCourClickOpen = () => {
         setOpenCour(true);
     };
@@ -52,54 +49,19 @@ function Cards(courses, myCourses, myReviews, myRecom) {
     const handleRateChange = (event) => {
         setRate(event.target.value);
     };
+    console.log("user cards",user)
     return (
         <Container maxWidth="md" component="main">
             <Grid container spacing={5} className="Grid">
-                <Grid item xs={12} sm={6} md={4} className="Card">
-                    <Card align="top">
-                        <CardHeader
-                            title="Mis Materias"
-                            titleTypographyProps={{ align: 'center' }}
-                            subheaderTypographyProps={{ align: 'center' }} className="CardHeader"
-                        />
-                        <CardContent>
-                            <Table size="small">
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>
-                                            <Typography variant="h6" color="textSecondary" align="left">
-                                                hola
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Button className='Button' onClick={handleCourClickOpen}>
-                                                Rate and Comment
-                                            </Button>
-                                            <Modal open={openCour} handleClose={handleClose} title="Puntua y Comenta" cancel={true} children={false} rateChange={handleRateChange}>
 
-                                            </Modal>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </CardContent>
-                        {/*<CardActions>*/}
-                        {/*    <Button fullWidth variant={tier.buttonVariant} color="primary">*/}
-                        {/*        {tier.buttonText}*/}
-                        {/*    </Button>*/}
-                        {/*</CardActions>*/}
-                    </Card>
-                </Grid>
-                {/*<MyCards open={openCour} handleOpen={handleCourClickOpen()} handleClose={handleClose()}*/}
-                {/*         title="Mis Materias" write buttonText="Rate and Comment"/>*/}
+                <MyCourses open={openCour} handleOpen={handleCourClickOpen} handleClose={handleClose} inside={myCourses} rateChange={handleRateChange}/>
 
-                <MyCards open={open} title="Mis Materias Recomendadas" handleOpen={handleClickOpen} handleClose={handleClose} inside={myRecom}/>
+                <MyRecomendations  title="Mis Materias Recomendadas"   inside={myRecom}/>
 
                 <MyCards open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
-                         title="Mis Comentarios" buttonText="Ver Comentarios" cancel={false} children={true} inside={myReviews}/>
+                         title="Mis Comentarios"  inside={myReviews}/>
 
-                <MyCards  open ={open} title="Todas las Materias"  handleOpen={handleClickOpen} handleClose={handleClose}
-                         buttonText="Ver Comentarios" cancel={false} children={true} inside={courses} />
+                <MyCards  title="Todas las materias" open ={open}  handleOpen={handleClickOpen} handleClose={handleClose} inside={courses} />
 
             </Grid>
         </Container>

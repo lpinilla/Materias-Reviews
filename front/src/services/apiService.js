@@ -47,3 +47,5 @@ export function addFriend(userID,payload) {
     //Por ahi hay que cambiar userID a int
     return http.post(`/users/${userID}/friend_request`, payload);
 }
+
+// TODO: getUserRecomendedCourses

@@ -11,11 +11,18 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import {getHelloWorld, getUser} from "../services/apiService";
+import TableContainer from "@material-ui/core/TableContainer";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import {TableCell, TableRow} from "@material-ui/core";
+import TableHead from "@material-ui/core/TableHead";
 
 
 function Header({user, selectedUser}) {
-
+    //user profile
     const [open, setOpen] = React.useState(false);
+    //add friend
+    const [openAdd,setOpenAdd]=React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -24,12 +31,18 @@ function Header({user, selectedUser}) {
     const handleClose = () => {
         setOpen(false);
     };
+    const handleClickOpenAdd = () => {
+        setOpenAdd(true);
+    };
+
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+    };
     if (user !== undefined)
         var usuario = user.usuario;
 
 
-
-    console.log("header",selectedUser,usuario)
+    console.log("header", selectedUser, usuario)
 
 
     return (
@@ -41,34 +54,87 @@ function Header({user, selectedUser}) {
                 {/*TOOD: si el usuario no esta login, no mostrar*/}
 
                 <nav>
-                    {usuario!==undefined ? (
+                    {usuario !== undefined ? (
                         <div>
                             <Link variant="button" color="textPrimary" href="#" className="Link"
-                                  onClick={handleClickOpen}>
+                                  onClick={handleClickOpen} >
                                 Mi Usuario
                             </Link>
                             <Dialog open={open} onClose={handleClose}
                                     aria-labelledby="form-dialog-title">
-                                <DialogTitle id="form-dialog-title">Mis usuario </DialogTitle>
-                                <DialogContent>
-                                    <TextField
+                                <DialogTitle id="form-dialog-title">Mi usuario </DialogTitle>
+                                <DialogContent >
+                                    <TextField style={{padding: "6px 24px 6px 16px"}}
                                         id="name"
                                         label="Nombre y Apellido"
-                                        defaultValue={usuario ===undefined? '': usuario.nombre}
+                                        defaultValue={usuario === undefined ? '' : usuario.nombre}
                                         InputProps={{
                                             readOnly: true,
                                         }}
                                         fullWidth
                                     />
-                                    <TextField
-                                        id="name"
+                                    <TextField style={{padding: "6px 24px 6px 16px"}}
+                                        id="id"
                                         label="Legajo"
-                                        defaultValue={usuario ===undefined? '': usuario.legajo}
+                                        defaultValue={usuario === undefined ? '' : usuario.legajo}
                                         InputProps={{
                                             readOnly: true,
                                         }}
                                         fullWidth
                                     />
+                                    <TableContainer>
+                                        <Table size="small" style={{marginTop: "39px", borderTop: "dotted"}}>
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell style={{fontWeight: "bold"}}>Amigos</TableCell>
+                                                    <TableCell style={{textAlign: "right"}}>
+                                                        <Button color="primary" onClick={handleClickOpenAdd}>
+                                                            Añadir Amigo
+                                                        </Button>
+                                                        <Dialog open={openAdd} onClose={handleCloseAdd}
+                                                                aria-labelledby="form-dialog-title">
+                                                            <DialogTitle id="form-dialog-title">Añadir amigo </DialogTitle>
+                                                            <DialogContent>
+                                                                <TextField
+                                                                    id="legajo"
+                                                                    label="Legajo"
+                                                                    type={"text"}
+                                                                    fullWidth
+                                                                />
+                                                            </DialogContent>
+                                                            <Button onClick={handleCloseAdd} color="primary">
+                                                                Añadir
+                                                            </Button>
+                                                        </Dialog>
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {/*TODO: foreach amigo del user*/}
+                                                <TableRow>
+                                                    <TableCell component="th" scope="row">
+                                                        Amigo 1
+                                                    </TableCell>
+                                                    <TableCell style={{textAlign: "right"}}>
+                                                        <Button color="primary">
+                                                            Eliminar
+                                                        </Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell component="th" scope="row">
+                                                        Amigo 2
+                                                    </TableCell>
+                                                    <TableCell style={{textAlign: "right"}}>
+                                                        <Button color="primary">
+                                                            Eliminar
+                                                        </Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableBody>
+
+                                        </Table>
+                                    </TableContainer>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={handleClose} color="primary">
