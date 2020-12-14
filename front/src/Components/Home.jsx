@@ -45,18 +45,15 @@ export default class Home extends Component {
                         this.setState({user_id: user_id});
                     }}
                     submitUser={async () => {
-                        if (this.state.user_id !== "") {
+                        const { user_id } = this.state;
+                        if (user_id !== "") {
                             this.setState({selectedUser: true});
-                            const id = parseInt(this.state.user_id, 10);
-                            const user = await getUser(id);
-                            this.setState({user: user.data});
-                            this.setState({myCourses:getMyCourses(this.state.user_id)});
-                            this.setState({myReviews:getMyReviews(this.state.user_id)});
-
+                            const id = parseInt(user_id, 10);
+                            const { data: user } = await getUser(id);
+                            const myCourses = await getMyCourses(user_id);
+                            const myReviews = await getMyReviews(user_id);
+                            this.setState({user, myCourses, myReviews});
                         } else {
-
-                            // const id = parseInt(this.state.user_id, 10);
-                            // const user = await getUser(0);
                             this.setState({user: ''});
                         }
                     }}

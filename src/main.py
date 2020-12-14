@@ -78,7 +78,7 @@ def get_course_correlatives(codigo_materia: str):
 
 
 @app.get('/current_user_courses/{user_id}')
-def read_item(user_id: str):
+def read_item(user_id: int):
     q = "MATCH (m:Materia), (u:Usuario {{ legajo: '{}'}})\
          RETURN (u)-[:cursando]->(m)".format(user_id)
     result = neo4j.query(q)
