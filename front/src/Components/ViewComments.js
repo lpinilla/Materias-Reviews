@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
 import { getAllReviews } from '../services/apiService';
+import {getUser} from '../services/apiService';
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
@@ -42,7 +43,7 @@ export default function ViewComments({ reviews, open, handleClose }) {
                                             {e.comentario}
                                         </TableCell>
                                         <TableCell align="right">{e.rating}</TableCell>
-                                        <TableCell align="right">TODO: getUser({e.autor})</TableCell>
+                                        {e.autor === undefined? null : <TableCell align="right">TODO: getUser({e.autor})</TableCell>}
                                     </TableRow>
                                 )
                             })}

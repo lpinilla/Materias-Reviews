@@ -6,14 +6,11 @@ import {
     Table, TableBody, TableRow, TableCell, Typography, Grid
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
-import Modal from "./Modal";
-import {getAllReviews} from '../../services/apiService';
-import Paper from "@material-ui/core/Paper";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import ViewComments from "../ViewComments";
+import {getAllReviews} from '../services/apiService';
+import ViewComments from "./ViewComments";
+import ViewComment from "./ViewComment";
 
-export default class MyCards extends Component {
+export default class MyReviews extends Component {
     state = {
         modal: false,
         payload: {
@@ -31,14 +28,16 @@ export default class MyCards extends Component {
     }
 
     renderCommentsForSubject = async (e) => {
-        const {codigo} = e;
-        const response = await getAllReviews(codigo);
-        const {reviews} = response.data;
-        this.setState({reviews: reviews, modal: true, payload: e});
+        // const {codigo} = e;
+        // const response = await getAllReviews(codigo);
+        // const {reviews} = response.data;
+
+        this.setState({reviews: e, modal: true, payload: e});
     };
 
     render() {
         const {inside, title, buttonText, cancel, children} = this.props;
+        console.log("mycards",inside)
         return (
             <Grid item xs={12} sm={6} md={4} className="Card" >
                 <Card align="top" style={{width:"max-content"}}>
@@ -50,12 +49,12 @@ export default class MyCards extends Component {
                     <CardContent>
                         <Table size="small">
                             <TableBody>
-                                {inside === undefined ? null : inside.map((e, key) => {
+                                {inside === undefined ? null : inside.mis_reviews.map((e, key) => {
                                         return (
                                             <TableRow key={key}>
                                                 <TableCell>
                                                     <Typography variant="h6" color="textSecondary" align="left">
-                                                        {e.nombre}
+                                                        {e.referencia}
                                                     </Typography>
                                                 </TableCell>
 
@@ -63,7 +62,7 @@ export default class MyCards extends Component {
                                                     <Button className='Button' onClick={async () => {
                                                         this.renderCommentsForSubject(e);
                                                     }}>
-                                                        Ver Comentarios
+                                                        Ver Comentario
                                                     </Button>
 
                                                 </TableCell>
@@ -72,9 +71,9 @@ export default class MyCards extends Component {
                                         );
                                     }
                                 )}
-                                <ViewComments open={this.state.modal} handleClose={() => this.setState({modal: false})}
-                                              data={this.state.payload} cancel={cancel} reviews={this.state.reviews}>
-                                </ViewComments>
+                                <ViewComment open={this.state.modal} handleClose={() => this.setState({modal: false})}
+                                              data={this.state.payload} cancel={cancel} review={this.state.reviews}>
+                                </ViewComment>
                             </TableBody>
                         </Table>
                     </CardContent>

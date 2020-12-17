@@ -12,7 +12,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 
 
-export default function MyRecomendations({ inside, user }) {
+export default function MyRecomendations({ inside }) {
+    console.log("my recom",inside)
     return (
         <Grid item xs={12} sm={6} md={4} className="Card">
             <Card align="top">
@@ -24,7 +25,7 @@ export default function MyRecomendations({ inside, user }) {
                 <CardContent>
                     <Table size="small">
                         <TableBody>
-                            {inside === undefined ? null : inside.myRecom.map((e, key) => {
+                            {inside === undefined ? null : inside.map((e, key) => {
                                 return (
                                     <TableRow key={key}>
                                         <TableCell>

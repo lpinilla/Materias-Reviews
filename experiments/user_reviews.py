@@ -12,9 +12,16 @@ neo4j = Neo4jConnection(uri='bolt://localhost:7687')
 #escribir una review
 
 review = {
-    'autor': '87643',
+    'autor': '56789',
     'rating': 5,
     'comentario': 'Materia escencial para la carrera',
+    'referencia': '72.08'
+}
+
+review = {
+    'autor': '12345',
+    'rating': 5,
+    'comentario': 'Muy interesanteeee',
     'referencia': '72.08'
 }
 

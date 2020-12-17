@@ -19,9 +19,10 @@ import RateAndComment from "./RateAndComment";
 import ViewComments from "./ViewComments";
 import MyRecomendations from "./MyRecomendations";
 import MyCourses from "./MyCourses";
+import MyReviews from "./MyReviews";
 
 
-function Cards(courses,myCourses, myReviews, myRecom,user) {
+function Cards({courses,myCourses, myReviews, myRecom}) {
 
     const [open, setOpen] = React.useState(false);
     const [openCom, setOpenCom] = React.useState(false);
@@ -49,7 +50,7 @@ function Cards(courses,myCourses, myReviews, myRecom,user) {
     const handleRateChange = (event) => {
         setRate(event.target.value);
     };
-    console.log("user cards",user)
+    console.log("cards",myReviews)
     return (
         <Container maxWidth="md" component="main">
             <Grid container spacing={5} className="Grid">
@@ -58,10 +59,10 @@ function Cards(courses,myCourses, myReviews, myRecom,user) {
 
                 <MyRecomendations  title="Mis Materias Recomendadas"   inside={myRecom}/>
 
-                <MyCards open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
-                         title="Mis Comentarios"  inside={myReviews}/>
+                <MyReviews open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
+                         title="Mis Comentarios"  inside={myReviews} reviews={true}/>
 
-                <MyCards  title="Todas las materias" open ={open}  handleOpen={handleClickOpen} handleClose={handleClose} inside={courses} />
+                <MyCards  title="Todas las materias" open ={open}  handleOpen={handleClickOpen} handleClose={handleClose} inside={courses.materias} />
 
             </Grid>
         </Container>

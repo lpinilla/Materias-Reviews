@@ -27,13 +27,12 @@ export default class Home extends Component {
 
     renderLogin = () => {
         const {selectedUser, user_id: legajo} = this.state;
-        console.log("my reviews", this.state.myReviews)
 
         if (selectedUser) {
             return (
                 <div>
                     <Cards courses={this.state.courses} myCourses={this.state.myCourses}
-                           myReviews={this.state.myReviews} user={this.state.user}/>
+                           myReviews={this.state.myReviews.data} user={this.state.user}/>
                 </div>
             );
         } else {
@@ -53,6 +52,7 @@ export default class Home extends Component {
                             const myCourses = await getMyCourses(user_id);
                             const myReviews = await getMyReviews(user_id);
                             this.setState({user, myCourses, myReviews});
+
                         } else {
                             this.setState({user: ''});
                         }
