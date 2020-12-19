@@ -6,7 +6,6 @@ from pydantic import BaseModel
 import json
 from fastapi.middleware.cors import CORSMiddleware
 
-
 #declarando objeto UserID
 
 class UserID(BaseModel):
@@ -41,14 +40,14 @@ app.add_middleware(
 )
 
 #conectando con mongo
-mongo = MongoClient('mongo:27017')
+mongo = MongoClient('localhost:27017')
 mongodb = mongo['bd2tp']
 materias_coll = mongodb['materias']
 users_coll = mongodb['usuarios']
 reviews_coll = mongodb['reviews']
 
 #conectando con neo4j
-neo4j = Neo4jConnection(uri='bolt://neo4j:7687')
+neo4j = Neo4jConnection(uri='bolt://localhost:7687')
 
 
 @app.get("/")
@@ -137,7 +136,7 @@ def add_new_review(review: Review):
 @app.get('/users/{legajo}')
 def get_user(legajo: int):
     cursor = users_coll.find({'legajo': legajo}, {'_id': False})
-    return {'usuario' : cursor[0]}
+    return {'usuario' : cursor}
 
 
 @app.get('/friends/{user_id}')
