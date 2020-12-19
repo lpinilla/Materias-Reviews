@@ -3,7 +3,7 @@ import Header from './Header';
 import Description from './Description';
 import Cards from './Cards';
 import Login from './Login';
-import { getAllCourses, getHelloWorld, getMyCourses, getMyReviews, getUser } from '../services/apiService';
+import { getAllCourses, getHelloWorld, getMyCourses, getMyReviews, getUser, getFriends, addFriend } from '../services/apiService';
 
 export default class Home extends Component {
     state = {
@@ -15,7 +15,9 @@ export default class Home extends Component {
         courses: [],
         myCourses: [],
         myReviews: [],
-        myRecom: []
+        myFriends:[],
+        myRecom: [],
+        friendLegajo:''
     }
 
     componentDidMount = async () => {
@@ -29,8 +31,9 @@ export default class Home extends Component {
         const id = parseInt(user_id, 10);
         const { data: user } = await getUser(id);
         const myCourses = await getMyCourses(user_id);
+        const myFriends = await getFriends(user_id);
         const myReviews = await getMyReviews(user_id);
-        this.setState({ user, myCourses, myReviews });
+        this.setState({ user, myCourses, myReviews, myFriends });
     }
 
     renderLogin = () => {
@@ -59,7 +62,8 @@ export default class Home extends Component {
                             const { data: user } = await getUser(id);
                             const myCourses = await getMyCourses(user_id);
                             const myReviews = await getMyReviews(user_id);
-                            this.setState({ user, myCourses, myReviews });
+                            const myFriends = await getFriends(user_id);
+                            this.setState({ user, myCourses, myReviews, myFriends });
 
                         } else {
                             this.setState({ user: '' });
@@ -74,7 +78,19 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <Header user={this.state.user} selectedUser={this.state.selectedUser} />
+                <Header 
+                    handleSubmit={async () => {
+                        console.log(this.state.user.usuario.legajo)
+                        await addFriend(this.state.user.usuario.legajo,{
+                            user_id: parseInt(this.state.friendLegajo)
+                        })
+                        const myFriends = await getFriends(this.state.user.usuario.legajo);
+                        this.setState({ myFriends, friendLegajo:'' });
+                    }}
+                    handleTextfieldChange={(e) => this.setState({ friendLegajo: e.target.value })}
+                    friendLegajo={this.state.friendLegajo}
+                    user={this.state.user} 
+                    selectedUser={this.state.selectedUser} myFriends={this.state.myFriends} />
                 <Description />
 
                 {/*<Cards courses={this.state.courses}/>*/}

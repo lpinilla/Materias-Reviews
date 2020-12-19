@@ -10,19 +10,19 @@ import Button from "@material-ui/core/Button";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
-import {getHelloWorld, getUser} from "../services/apiService";
+import { getHelloWorld, getUser } from "../services/apiService";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import {TableCell, TableRow} from "@material-ui/core";
+import { TableCell, TableRow } from "@material-ui/core";
 import TableHead from "@material-ui/core/TableHead";
 
 
-function Header({user, selectedUser}) {
+function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldChange, friendLegajo }) {
     //user profile
     const [open, setOpen] = React.useState(false);
     //add friend
-    const [openAdd,setOpenAdd]=React.useState(false);
+    const [openAdd, setOpenAdd] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -57,14 +57,14 @@ function Header({user, selectedUser}) {
                     {usuario !== undefined ? (
                         <div>
                             <Link variant="button" color="textPrimary" href="#" className="Link"
-                                  onClick={handleClickOpen} >
+                                onClick={handleClickOpen} >
                                 Mi Usuario
                             </Link>
                             <Dialog open={open} onClose={handleClose}
-                                    aria-labelledby="form-dialog-title">
+                                aria-labelledby="form-dialog-title">
                                 <DialogTitle id="form-dialog-title">Mi usuario </DialogTitle>
                                 <DialogContent >
-                                    <TextField style={{padding: "6px 24px 6px 16px"}}
+                                    <TextField style={{ padding: "6px 24px 6px 16px" }}
                                         id="name"
                                         label="Nombre y Apellido"
                                         defaultValue={usuario === undefined ? '' : usuario.nombre}
@@ -73,7 +73,7 @@ function Header({user, selectedUser}) {
                                         }}
                                         fullWidth
                                     />
-                                    <TextField style={{padding: "6px 24px 6px 16px"}}
+                                    <TextField style={{ padding: "6px 24px 6px 16px" }}
                                         id="id"
                                         label="Legajo"
                                         defaultValue={usuario === undefined ? '' : usuario.legajo}
@@ -83,26 +83,28 @@ function Header({user, selectedUser}) {
                                         fullWidth
                                     />
                                     <TableContainer>
-                                        <Table size="small" style={{marginTop: "39px", borderTop: "dotted"}}>
+                                        <Table size="small" style={{ marginTop: "39px", borderTop: "dotted" }}>
                                             <TableHead>
                                                 <TableRow>
-                                                    <TableCell style={{fontWeight: "bold"}}>Amigos</TableCell>
-                                                    <TableCell style={{textAlign: "right"}}>
+                                                    <TableCell style={{ fontWeight: "bold" }}>Amigos</TableCell>
+                                                    <TableCell style={{ textAlign: "right" }}>
                                                         <Button color="primary" onClick={handleClickOpenAdd}>
                                                             Añadir Amigo
                                                         </Button>
                                                         <Dialog open={openAdd} onClose={handleCloseAdd}
-                                                                aria-labelledby="form-dialog-title">
+                                                            aria-labelledby="form-dialog-title">
                                                             <DialogTitle id="form-dialog-title">Añadir amigo </DialogTitle>
                                                             <DialogContent>
                                                                 <TextField
                                                                     id="legajo"
                                                                     label="Legajo"
+                                                                    value={friendLegajo}
+                                                                    onChange={handleTextfieldChange}
                                                                     type={"text"}
                                                                     fullWidth
                                                                 />
                                                             </DialogContent>
-                                                            <Button onClick={handleCloseAdd} color="primary">
+                                                            <Button onClick={handleSubmit} color="primary">
                                                                 Añadir
                                                             </Button>
                                                         </Dialog>
@@ -111,26 +113,25 @@ function Header({user, selectedUser}) {
                                             </TableHead>
                                             <TableBody>
                                                 {/*TODO: foreach amigo del user*/}
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        Amigo 1
-                                                    </TableCell>
-                                                    <TableCell style={{textAlign: "right"}}>
-                                                        <Button color="primary">
-                                                            Eliminar
+                                                {console.log("mis amigos", myFriends)}
+                                                {myFriends ? console.log(myFriends.data.amigos) : null}
+                                                {myFriends ? myFriends.data.amigos.map(e => {
+                                                    console.log(e)
+                                                    return (
+                                                        <TableRow>
+                                                            <TableCell component="th" scope="row">
+                                                                {e[0].nombre}
+                                                            </TableCell>
+                                                            <TableCell style={{ textAlign: "right" }}>
+                                                                <Button color="primary">
+                                                                    Eliminar
                                                         </Button>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        Amigo 2
-                                                    </TableCell>
-                                                    <TableCell style={{textAlign: "right"}}>
-                                                        <Button color="primary">
-                                                            Eliminar
-                                                        </Button>
-                                                    </TableCell>
-                                                </TableRow>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    )
+                                                })
+                                                    : null}
+
                                             </TableBody>
 
                                         </Table>
