@@ -37,6 +37,7 @@ export default class MyCards extends Component {
         const {codigo} = e;
         const response = await getAllReviews(codigo);
         const {reviews} = response.data;
+        console.log(reviews);
         this.setState({reviews: reviews, modal: true, payload: e});
     };
 

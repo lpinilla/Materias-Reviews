@@ -19,6 +19,7 @@ import RateAndComment from "./RateAndComment";
 import ViewComments from "./ViewComments";
 import MyRecomendations from "./MyRecomendations";
 import MyCourses from "./MyCourses";
+import MyFriends from './MyFriends';
 import MyReviews from "./MyReviews";
 
 
@@ -59,8 +60,9 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
                 <MyReviews open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
                          title="Mis Comentarios"  inside={myReviews} reviews={true}/>
 
+                <MyFriends user={user} title="Mis amigos" ></MyFriends>
                 <MyCards refreshAll={refreshAll} user={user} title="Todas las materias" open ={open}  handleOpen={handleClickOpen} handleClose={handleClose} inside={courses.materias} />
-
+                
             </Grid>
         </Container>
 

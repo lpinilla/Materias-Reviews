@@ -36,7 +36,7 @@ export default function ViewComment({review, open, handleClose}) {
                                 <TableCell component="th" scope="row">
                                     {review===undefined?null:review.comentario}
                                 </TableCell>
-                                <TableCell align="right">{review===undefined?null:review.rating}</TableCell>
+                                <TableCell align="right">{review===undefined?null:(review.rating ? review.rating: review.puntaje)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
