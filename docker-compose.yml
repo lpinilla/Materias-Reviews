@@ -19,8 +19,8 @@ services:
         - "8081:3000"
     volumes:
         - "$PWD/front:/app"
-    links:
-        - backend
+          #    links:
+          #        - backend
   neo4j:
       image: "neo4j:latest"
       ports:
