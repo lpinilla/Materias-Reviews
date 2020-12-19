@@ -50,6 +50,7 @@ export default class MyReviews extends Component {
                         <Table size="small">
                             <TableBody>
                                 {inside === undefined ? null : inside.mis_reviews.map((e, key) => {
+                                    console.log("ver", e)
                                         return (
                                             <TableRow key={key}>
                                                 <TableCell>
@@ -64,9 +65,7 @@ export default class MyReviews extends Component {
                                                     }}>
                                                         Ver Comentario
                                                     </Button>
-
                                                 </TableCell>
-
                                             </TableRow>
                                         );
                                     }

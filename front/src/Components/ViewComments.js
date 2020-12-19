@@ -19,6 +19,7 @@ import TableHead from "@material-ui/core/TableHead";
 
 
 export default function ViewComments({ reviews, open, handleClose }) {
+    console.log('aaaa', reviews)
     return (
         <Dialog open={open} onClose={handleClose}
             aria-labelledby="form-dialog-title">
@@ -42,8 +43,9 @@ export default function ViewComments({ reviews, open, handleClose }) {
                                         <TableCell component="th" scope="row">
                                             {e.comentario}
                                         </TableCell>
-                                        <TableCell align="right">{e.rating}</TableCell>
-                                        {e.autor === undefined? null : <TableCell align="right">TODO: getUser({e.autor})</TableCell>}
+                                        <TableCell align="right">{e.rating? e.rating:e.puntaje}</TableCell>
+                                        {/** TODO: agregar el nombre en vez del legajo */}
+                                        {e.autor === undefined? null : <TableCell align="right">{e.autor}</TableCell>}
                                     </TableRow>
                                 )
                             })}

@@ -60,7 +60,7 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
                          title="Mis Comentarios"  inside={myReviews} reviews={true}/>
 
                 <MyCards refreshAll={refreshAll} user={user} title="Todas las materias" open ={open}  handleOpen={handleClickOpen} handleClose={handleClose} inside={courses.materias} />
-
+                
             </Grid>
         </Container>
 
