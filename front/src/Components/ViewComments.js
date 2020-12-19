@@ -19,7 +19,7 @@ import TableHead from "@material-ui/core/TableHead";
 
 
 export default function ViewComments({ reviews, open, handleClose }) {
-
+    console.log('aaaa', reviews)
     return (
         <Dialog open={open} onClose={handleClose}
             aria-labelledby="form-dialog-title">

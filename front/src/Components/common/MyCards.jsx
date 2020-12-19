@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
 import Modal from "./Modal";
-import {getAllReviews,addReview} from '../../services/apiService';
+import {getAllReviews,addReview, getUser} from '../../services/apiService';
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
@@ -36,10 +36,20 @@ export default class MyCards extends Component {
     renderCommentsForSubject = async (e) => {
         const {codigo} = e;
         const response = await getAllReviews(codigo);
-        const {reviews} = response.data;
+        let {reviews} = response.data;
+        reviews = await this.renderAuthorFromReview(reviews)
         console.log(reviews);
         this.setState({reviews: reviews, modal: true, payload: e});
     };
+
+    renderAuthorFromReview = async (reviews) => {
+        for (let index = 0; index < reviews.length; index++) {
+            const element = await getUser(reviews[index].autor);
+            console.log("aca", element)
+            reviews[index].autor = element.data.usuario.nombre;
+        }
+        return reviews;
+    }
 
     rateAndCommentSubject = async (e) => {
         this.setState({ modalRate: true, selectedSubjet: e });
