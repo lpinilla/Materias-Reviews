@@ -4,12 +4,15 @@ services:
   backend:
     build: ./src
     ports:
-        - "4444:8080"
+        - "8080:8080"
     volumes:
         - "$PWD/src:/src"
     links:
-        - mongo
         - neo4j
+        - mongo
+    depends_on:
+        - neo4j
+        - mongo
   frontend:
     build: ./front
     ports:
@@ -28,4 +31,4 @@ services:
   mongo:
       image: "mongo"
       ports:
-        - "27018:27017"
+        - "27017:27017"

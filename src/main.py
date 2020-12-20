@@ -6,7 +6,6 @@ from pydantic import BaseModel
 import json
 from fastapi.middleware.cors import CORSMiddleware
 
-
 #declarando objeto UserID
 
 class UserID(BaseModel):
@@ -29,7 +28,8 @@ origins = [
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:8081",
-    "http://localhost:4444"
+    "http://localhost:4444",
+    "http://localhost:7687",
 ]
 
 app.add_middleware(
