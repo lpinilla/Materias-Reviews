@@ -32,15 +32,15 @@ users = [
 ]
 
 #agregar usuarios a mongo
-users_coll.insert_many(users)
+#users_coll.insert_many(users)
 
 #agregar nodos a neo
-for u in users:
-    q = "CREATE (u:Usuario {{nombre:'{}', legajo:'{}'}});".format(u['nombre'], u['legajo'])
-    neo4j.query(q)
+#for u in users:
+#    q = "CREATE (u:Usuario {{nombre:'{}', legajo:'{}'}});".format(u['nombre'], u['legajo'])
+#    neo4j.query(q)
 
 #agregar las relaciones a neo
-u1 = users[0]['legajo']
+u1 = users[2]['legajo']
 u2 = users[1]['legajo']
 q = "MATCH (u1:Usuario {{legajo: '{}'}}), (u2:Usuario {{legajo: '{}'}}) \
     CREATE (u1)-[:amigoDe]->(u2), (u2)-[:amigoDe]->(u1);\

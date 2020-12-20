@@ -25,8 +25,16 @@ review = {
     'referencia': '72.08'
 }
 
+
+review = {
+    'autor': '56789',
+    'rating': 3,
+    'comentario': 'Meh',
+    'referencia': '72.08'
+}
+
 #agregar la review a mongo
-#review_coll.insert_one(review)
+review_coll.insert_one(review)
 
 #agregar la review a neo (arista con propiedad)
 q = "MATCH (u:Usuario {{legajo: '{}' }}), (m:Materia {{ codigo: '{}'}})\

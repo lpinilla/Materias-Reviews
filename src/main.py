@@ -160,8 +160,8 @@ def add_friend(legajo: int, user: UserID):
 @app.get('/recommendations/{user_id}/{min_score}')
 def get_recommendation(user_id: int, min_score: Optional[int] = 0):
     q = "MATCH (u1:Usuario {{legajo: '{}'}})-[:amigoDe]->(u2:Usuario)-[o:opina]->(m:Materia) \
-         WHERE o.puntaje > '{}' \
-         RETURN m;".format(user_id, min_score)
+         WHERE o.puntaje >= '{}' \
+         RETURN DISTINCT m;".format(user_id, min_score)
     result = neo4j.query(q)
     return {'recommendations': result}
 
