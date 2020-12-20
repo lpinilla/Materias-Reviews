@@ -11,7 +11,7 @@ import MyRecomendations from "./MyRecomendations";
 import MyReviews from "./MyReviews";
 
 
-function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
+function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll, handleMinScoreChange, minScore, searchRecomendations}) {
 
     const [open, setOpen] = React.useState(false);
     const [openCom, setOpenCom] = React.useState(false);
@@ -43,7 +43,7 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
         <Container maxWidth="md" component="main">
             <Grid container spacing={5} className="Grid">
 
-                <MyRecomendations  title="Mis Materias Recomendadas"  inside={myRecom}/>
+                <MyRecomendations onChange={handleMinScoreChange} minScore={minScore} searchRecomendations={searchRecomendations} title="Mis Materias Recomendadas" inside={myRecom}/>
 
                 <MyReviews open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
                          title="Mis Comentarios"  inside={myReviews} reviews={true}/>

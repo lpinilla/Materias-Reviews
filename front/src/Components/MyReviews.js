@@ -56,7 +56,7 @@ export default class MyReviews extends Component {
                     <CardContent>
                         <Table size="small">
                             <TableBody>
-                                {inside.mis_reviews === undefined ? null : inside.mis_reviews.map((e, key) => {
+                                {inside === undefined ? null : inside.mis_reviews.map((e, key) => {
                                         return (
                                             <TableRow key={key}>
                                                 <TableCell>

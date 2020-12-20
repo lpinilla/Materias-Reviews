@@ -3,7 +3,7 @@ import Header from './Header';
 import Description from './Description';
 import Cards from './Cards';
 import Login from './Login';
-import { getAllCourses, getHelloWorld, getMyCourses, getMyReviews, getUser, getFriends, addFriend } from '../services/apiService';
+import { getUserRecomendedCourses,getAllCourses, getHelloWorld, getMyCourses, getMyReviews, getUser, getFriends, addFriend } from '../services/apiService';
 
 export default class Home extends Component {
     state = {
@@ -17,7 +17,8 @@ export default class Home extends Component {
         myReviews: [],
         myFriends:[],
         myRecom: [],
-        friendLegajo:''
+        friendLegajo:'',
+        minScore:""
     }
 
     componentDidMount = async () => {
@@ -43,7 +44,17 @@ export default class Home extends Component {
             return (
                 <div>
                     <Cards refreshAll={this.refreshAll} courses={this.state.courses} myCourses={this.state.myCourses}
-                        myReviews={this.state.myReviews.data} user={this.state.user} />
+                        myReviews={this.state.myReviews.data} user={this.state.user}
+                        myRecom={this.state.myRecom} 
+                        handleMinScoreChange={(e) => this.setState({ minScore:e.target.value })} 
+                        minScore={this.state.minScore} 
+                        searchRecomendations={async() => {
+                            let { minScore } = this.state;
+                            minScore = parseInt(minScore);
+                            const { data:myRecom } = await getUserRecomendedCourses(this.state.user.usuario.legajo, minScore)
+                            console.log("myrecom ", myRecom)
+                            this.setState({ myRecom: myRecom.recommendations })
+                        }} />
                 </div>
             );
         } else {

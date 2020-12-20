@@ -51,5 +51,5 @@ export function addFriend(userID,payload) {
 // TODO: getUserRecomendedCourses
 export function getUserRecomendedCourses(userID,min_score) {
     //Por ahi hay que cambiar userID a int
-    return http.post(`/recommendations/${userID}/${min_score}`);
+    return http.get(`/recommendations/${userID}/${min_score}`);
 }
