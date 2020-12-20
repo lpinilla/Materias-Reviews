@@ -19,7 +19,6 @@ import TableHead from "@material-ui/core/TableHead";
 
 
 export default function ViewComments({ reviews, open, handleClose }) {
-    console.log('aaaa', reviews)
     return (
         <Dialog open={open} onClose={handleClose}
             aria-labelledby="form-dialog-title">
@@ -38,7 +37,7 @@ export default function ViewComments({ reviews, open, handleClose }) {
                         </TableHead>
                         <TableBody>
                             {reviews === undefined ? null : reviews.map((e, idx) => {
-                                return (
+                               return (
                                     <TableRow key={idx}>
                                         <TableCell component="th" scope="row">
                                             {e.comentario}

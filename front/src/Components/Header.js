@@ -42,8 +42,6 @@ function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldCh
         var usuario = user.usuario;
 
 
-    console.log("header", selectedUser, usuario)
-
 
     return (
         <AppBar position="static" color="default" elevation={0} className='AppBar'>
@@ -112,8 +110,6 @@ function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldCh
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {/*TODO: foreach amigo del user*/}
-                                                {console.log("mis amigos", myFriends)}
                                                 {myFriends ? console.log(myFriends.data.amigos) : null}
                                                 {myFriends ? myFriends.data.amigos.map(e => {
                                                     console.log(e)

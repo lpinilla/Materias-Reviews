@@ -1,4 +1,4 @@
-import React, {Component, IntrinsicElements as classes} from 'react';
+import React, {Component} from 'react';
 import {
     Button,
     CardHeader,
@@ -6,8 +6,7 @@ import {
     Table, TableBody, TableRow, TableCell, Typography, Grid
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
-import {getAllReviews} from '../services/apiService';
-import ViewComments from "./ViewComments";
+import { getCourseByID} from '../services/apiService';
 import ViewComment from "./ViewComment";
 
 export default class MyReviews extends Component {
@@ -24,20 +23,28 @@ export default class MyReviews extends Component {
 
     constructor() {
         super();
-
+        this.renderCourseName=this.renderCourseName.bind(this);
     }
 
+    async renderCourseName(r) {
+        console.log("entro course")
+        if(r!==undefined){
+            for (let index = 0; index < r.mis_reviews.length; index++) {
+                const element = await getCourseByID(r.mis_reviews[index].referencia);
+                r.mis_reviews[index].name = element.data.materia.nombre;
+            }
+        }
+        return r;
+    }
     renderCommentsForSubject = async (e) => {
-        // const {codigo} = e;
-        // const response = await getAllReviews(codigo);
-        // const {reviews} = response.data;
-
         this.setState({reviews: e, modal: true, payload: e});
     };
 
     render() {
         const {inside, title, buttonText, cancel, children} = this.props;
-        console.log("mycards",inside)
+        this.renderCourseName(inside)
+        console.log("en reviews",inside)
+
         return (
             <Grid item xs={12} sm={6} md={4} className="Card" >
                 <Card align="top" style={{width:"max-content"}}>
@@ -49,13 +56,12 @@ export default class MyReviews extends Component {
                     <CardContent>
                         <Table size="small">
                             <TableBody>
-                                {inside === undefined ? null : inside.mis_reviews.map((e, key) => {
-                                    console.log("ver", e)
+                                {inside.mis_reviews === undefined ? null : inside.mis_reviews.map((e, key) => {
                                         return (
                                             <TableRow key={key}>
                                                 <TableCell>
                                                     <Typography variant="h6" color="textSecondary" align="left">
-                                                        {e.referencia}
+                                                        {e.name}
                                                     </Typography>
                                                 </TableCell>
 

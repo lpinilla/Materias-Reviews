@@ -38,14 +38,12 @@ export default class MyCards extends Component {
         const response = await getAllReviews(codigo);
         let {reviews} = response.data;
         reviews = await this.renderAuthorFromReview(reviews)
-        console.log(reviews);
         this.setState({reviews: reviews, modal: true, payload: e});
     };
 
     renderAuthorFromReview = async (reviews) => {
         for (let index = 0; index < reviews.length; index++) {
             const element = await getUser(reviews[index].autor);
-            console.log("aca", element)
             reviews[index].autor = element.data.usuario.nombre;
         }
         return reviews;
