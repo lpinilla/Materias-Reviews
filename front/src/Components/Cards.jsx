@@ -54,7 +54,7 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
 
 {/*                <MyCourses open={openCour} handleOpen={handleCourClickOpen} handleClose={handleClose} inside={myCourses} rateChange={handleRateChange}/>
 */}
-                <MyRecomendations  title="Mis Materias Recomendadas"   inside={myRecom}/>
+                <MyRecomendations  title="Mis Materias Recomendadas"  inside={myRecom}/>
 
                 <MyReviews open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
                          title="Mis Comentarios"  inside={myReviews} reviews={true}/>
