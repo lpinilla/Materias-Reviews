@@ -32,7 +32,6 @@ export default class MyReviews extends Component {
 
     render() {
         const {inside, title, buttonText, cancel, children} = this.props;
-        console.log("en reviews",inside)
 
         return (
             <Grid item xs={12} sm={6} md={4} className="Card" >

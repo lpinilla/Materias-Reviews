@@ -6,11 +6,9 @@ import {
 
 } from '@material-ui/core';
 import '../App.css';
-import MyCards from "./common/MyCards";
+import MyCards from "./MyCards";
 import MyRecomendations from "./MyRecomendations";
 import MyReviews from "./MyReviews";
-import {getCourseByID} from "../services/apiService";
-
 
 function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll, handleMinScoreChange, minScore, searchRecomendations}) {
 
@@ -37,8 +35,6 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll, handleM
         setOpenCour(true);
     };
 
-
-    console.log("en cards",myReviews,courses)
     return (
         <Container maxWidth="md" component="main">
             <Grid container spacing={5} className="Grid">

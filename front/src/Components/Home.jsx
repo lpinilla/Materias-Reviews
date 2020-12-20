@@ -43,7 +43,6 @@ export default class Home extends Component {
                 r.mis_reviews[index].name = element.data.materia.nombre;
             }
         }
-        console.log("entro course",r)
         return r;
     }
 
@@ -57,7 +56,6 @@ export default class Home extends Component {
         const reviews = await this.renderCourseName(myReviews.data);
         this.setState({ user, myCourses, myFriends });
         this.setState({myReviews:reviews});
-        console.log("en refresh",reviews,this.state.myReviews);
 
     }
 
@@ -76,7 +74,6 @@ export default class Home extends Component {
                             let { minScore } = this.state;
                             minScore = parseInt(minScore);
                             const { data:myRecom } = await getUserRecomendedCourses(this.state.user.usuario.legajo, minScore)
-                            console.log("myrecom ", myRecom)
                             this.setState({ myRecom: myRecom.recommendations })
                         }} />
                 </div>
@@ -101,7 +98,6 @@ export default class Home extends Component {
                             const reviews = await this.renderCourseName(myReviews.data);
                             this.setState({ user, myCourses, myFriends });
                             this.setState({myReviews:reviews});
-                            console.log("en render",reviews,this.state);
 
                         } else {
                             this.setState({ user: '' });

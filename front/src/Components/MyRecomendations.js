@@ -6,10 +6,6 @@ import {
     Table, TableBody, TableRow, TableCell, Typography, Grid, TextField
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
-import { getAllReviews } from '../services/apiService';
-import Paper from "@material-ui/core/Paper";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 
 
 export default function MyRecomendations({ inside, onChange, minScore, searchRecomendations }) {
@@ -21,23 +17,27 @@ export default function MyRecomendations({ inside, onChange, minScore, searchRec
                     titleTypographyProps={{ align: 'center' }}
                     subheaderTypographyProps={{ align: 'center' }} className="CardHeader"
                 />
-                <div style={{ display:'flex' }}>
-                    <TextField 
-                        onChange={onChange}
-                        id="id"
-                        label="Puntaje minimo"
-                        fullWidth
-                        value={minScore}
-                    />
-                    <Button 
-                        onClick={searchRecomendations}
-                    >Buscar</Button>
-                </div>
+
                 <CardContent>
                     <Table size="small">
                         <TableBody>
+                            <TableRow >
+                                <TableCell style={{display:"flex",padding:0}}>
+                                    <TextField
+                                        onChange={onChange}
+                                        id="id"
+                                        label="Puntaje minimo"
+                                        value={minScore}
+                                        fullWidth
+                                    />
+                                </TableCell>
+                                <TableCell>
+                                    <Button  className='Button'
+                                             onClick={searchRecomendations}>Buscar</Button>
+                                </TableCell>
+                            </TableRow>
+
                             {inside === undefined ? null : inside.map((e, key) => {
-                                console.log(e)
                                 return (
                                     <TableRow key={key}>
                                         <TableCell>
