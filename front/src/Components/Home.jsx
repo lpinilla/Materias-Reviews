@@ -3,7 +3,16 @@ import Header from './Header';
 import Description from './Description';
 import Cards from './Cards';
 import Login from './Login';
-import { getUserRecomendedCourses,getAllCourses, getHelloWorld, getMyCourses, getMyReviews, getUser, getFriends, addFriend } from '../services/apiService';
+import { 
+    getUserRecomendedCourses,
+    getAllCourses, 
+    getMyCourses, 
+    getMyReviews, 
+    getUser, 
+    getFriends, 
+    addFriend,
+    getCourseByID
+} from '../services/apiService';
 
 export default class Home extends Component {
     state = {
@@ -27,6 +36,17 @@ export default class Home extends Component {
         // const user = await getUser(this.state.user_id);
     }
 
+    async  renderCourseName(r) {
+        if(r!==undefined){
+            for (let index = 0; index < r.mis_reviews.length; index++) {
+                const element = await getCourseByID(r.mis_reviews[index].referencia);
+                r.mis_reviews[index].name = element.data.materia.nombre;
+            }
+        }
+        console.log("entro course",r)
+        return r;
+    }
+
     refreshAll = async () => {
         const { user_id } = this.state;
         const id = parseInt(user_id, 10);
@@ -34,7 +54,11 @@ export default class Home extends Component {
         const myCourses = await getMyCourses(user_id);
         const myFriends = await getFriends(user_id);
         const myReviews = await getMyReviews(user_id);
-        this.setState({ user, myCourses, myReviews, myFriends });
+        const reviews = await this.renderCourseName(myReviews.data);
+        this.setState({ user, myCourses, myFriends });
+        this.setState({myReviews:reviews});
+        console.log("en refresh",reviews,this.state.myReviews);
+
     }
 
     renderLogin = () => {
@@ -44,7 +68,7 @@ export default class Home extends Component {
             return (
                 <div>
                     <Cards refreshAll={this.refreshAll} courses={this.state.courses} myCourses={this.state.myCourses}
-                        myReviews={this.state.myReviews.data} user={this.state.user}
+                        myReviews={this.state.myReviews} user={this.state.user}
                         myRecom={this.state.myRecom} 
                         handleMinScoreChange={(e) => this.setState({ minScore:e.target.value })} 
                         minScore={this.state.minScore} 
@@ -74,7 +98,10 @@ export default class Home extends Component {
                             const myCourses = await getMyCourses(user_id);
                             const myReviews = await getMyReviews(user_id);
                             const myFriends = await getFriends(user_id);
-                            this.setState({ user, myCourses, myReviews, myFriends });
+                            const reviews = await this.renderCourseName(myReviews.data);
+                            this.setState({ user, myCourses, myFriends });
+                            this.setState({myReviews:reviews});
+                            console.log("en render",reviews,this.state);
 
                         } else {
                             this.setState({ user: '' });
