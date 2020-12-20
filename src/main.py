@@ -29,7 +29,7 @@ origins = [
     "http://localhost:8080",
     "http://localhost:8081",
     "http://localhost:4444",
-    "http://localhost:7687",
+    "bolt://localhost:7687",
 ]
 
 app.add_middleware(
@@ -81,7 +81,7 @@ def get_course_correlatives(codigo_materia: str):
 @app.get('/current_user_courses/{user_id}')
 def read_item(user_id: int):
     q = "MATCH (m:Materia), (u:Usuario {{ legajo: '{}'}})\
-         RETURN (u)-[:cursando]->(m)".format(user_id)
+         RETURN DISTINCT (u)-[:cursando]->(m)".format(user_id)
     result = neo4j.query(q)
     return {"mis_materias": result}
 
