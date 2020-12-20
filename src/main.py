@@ -132,6 +132,13 @@ def add_new_review(review: Review):
     neo4j.query(q)
     return {'result': 'success'}
 
+@app.post('/review/{codigo_materia}/remove_review')
+def remove_review(codigo_materia: str, user: UserID):
+    result = reviews_coll.find({'autor': str(user.user_id), 'referencia': codigo_materia})
+    q = "MATCH (u:Usuario {{legajo: '{}'}})-[r:opina]->(m:Materia {{codigo: '{}'}}) DELETE r;".format(user.user_id, codigo_materia)
+    neo4j.query(q)
+    return {'result': 'success'}
+
 ############################## USUARIOS #################################
 
 @app.get('/users/{legajo}')
@@ -154,6 +161,14 @@ def add_friend(legajo: int, user: UserID):
         RETURN u1, u2;".format(user.user_id, legajo)
     result = neo4j.query(q)
     return {'result': result}
+
+@app.post('/users/{legajo}/remove_friend')
+def remove_friend(legajo: int, user: UserID):
+    q = "MATCH (u1:Usuario {{legajo: '{}'}})-[r1:amigoDe]->(u2:Usuario {{legajo: '{}'}}) \
+        (u2)-[r2:amigoDe]->(u1) DELETE r1, r2;".format(user.user_id, legajo)
+    result = neo4j.query(q)
+    return {'result': result}
+
 
 ########################### RECOMMENDATIONS ###############################
 
