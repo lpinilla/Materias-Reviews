@@ -10,9 +10,6 @@ import {
     Dialog,
     DialogActions
 } from '@material-ui/core';
-import Card from "@material-ui/core/Card/Card";
-import { getAllReviews } from '../services/apiService';
-import {getUser} from '../services/apiService';
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";

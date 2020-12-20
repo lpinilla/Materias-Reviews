@@ -59,7 +59,6 @@ export default function App() {
       <React.Fragment>
         <CssBaseline />
         <Home />
-      {/*<Footer classes="classes"/>*/}
       </React.Fragment>
   );
 }

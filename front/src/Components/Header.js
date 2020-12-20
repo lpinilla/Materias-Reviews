@@ -112,7 +112,6 @@ function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldCh
                                             <TableBody>
                                                 {myFriends ? console.log(myFriends.data.amigos) : null}
                                                 {myFriends ? myFriends.data.amigos.map(e => {
-                                                    console.log(e)
                                                     return (
                                                         <TableRow>
                                                             <TableCell component="th" scope="row">

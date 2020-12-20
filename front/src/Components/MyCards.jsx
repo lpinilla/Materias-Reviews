@@ -6,13 +6,9 @@ import {
     Table, TableBody, TableRow, TableCell, Typography, Grid
 } from '@material-ui/core';
 import Card from "@material-ui/core/Card/Card";
-import Modal from "./Modal";
-import {getAllReviews,addReview, getUser} from '../../services/apiService';
-import Paper from "@material-ui/core/Paper";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import ViewComments from "../ViewComments";
-import RateAndComment from '../RateAndComment';
+import {getAllReviews,addReview, getUser} from '../services/apiService';
+import ViewComments from "./ViewComments";
+import RateAndComment from './RateAndComment';
 export default class MyCards extends Component {
     state = {
         modal: false,
@@ -53,7 +49,6 @@ export default class MyCards extends Component {
         this.setState({ modalRate: true, selectedSubjet: e });
     }
     submitRateAndComment = async () => {
-        console.log("JE",this.state, this.props);
         const { rate, comment, selectedSubjet } = this.state;
         console.log( parseInt(this.props.user.legajo),rate,comment,selectedSubjet.codigo);
         const response = await addReview({
@@ -62,7 +57,6 @@ export default class MyCards extends Component {
             comentario: comment,
             codigo_materia: selectedSubjet.codigo
         });
-        console.log(response)
         this.props.refreshAll();
         this.setState({ modalRate: false });
 

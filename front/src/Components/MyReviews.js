@@ -23,27 +23,15 @@ export default class MyReviews extends Component {
 
     constructor() {
         super();
-        this.renderCourseName=this.renderCourseName.bind(this);
     }
 
-    async renderCourseName(r) {
-        console.log("entro course")
-        if(r!==undefined){
-            for (let index = 0; index < r.mis_reviews.length; index++) {
-                const element = await getCourseByID(r.mis_reviews[index].referencia);
-                r.mis_reviews[index].name = element.data.materia.nombre;
-            }
-        }
-        return r;
-    }
+
     renderCommentsForSubject = async (e) => {
         this.setState({reviews: e, modal: true, payload: e});
     };
 
     render() {
         const {inside, title, buttonText, cancel, children} = this.props;
-        this.renderCourseName(inside)
-        console.log("en reviews",inside)
 
         return (
             <Grid item xs={12} sm={6} md={4} className="Card" >
@@ -56,7 +44,7 @@ export default class MyReviews extends Component {
                     <CardContent>
                         <Table size="small">
                             <TableBody>
-                                {inside.mis_reviews === undefined ? null : inside.mis_reviews.map((e, key) => {
+                                {inside === undefined ? null : inside.map((e, key) => {
                                         return (
                                             <TableRow key={key}>
                                                 <TableCell>
