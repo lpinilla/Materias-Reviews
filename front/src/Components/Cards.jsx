@@ -9,6 +9,7 @@ import '../App.css';
 import MyCards from "./common/MyCards";
 import MyRecomendations from "./MyRecomendations";
 import MyReviews from "./MyReviews";
+import {getCourseByID} from "../services/apiService";
 
 
 function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
@@ -37,8 +38,7 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
     };
 
 
-
-
+    console.log("en cards",myReviews,courses)
     return (
         <Container maxWidth="md" component="main">
             <Grid container spacing={5} className="Grid">
@@ -46,7 +46,7 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll}) {
                 <MyRecomendations  title="Mis Materias Recomendadas"  inside={myRecom}/>
 
                 <MyReviews open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
-                         title="Mis Comentarios"  inside={myReviews} reviews={true}/>
+                         title="Mis Comentarios"  inside={myReviews.mis_reviews} reviews={true}/>
 
                 <MyCards refreshAll={refreshAll} user={user} title="Todas las materias" open ={open}  handleOpen={handleClickOpen} handleClose={handleClose} inside={courses.materias} />
                 
