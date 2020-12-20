@@ -143,7 +143,7 @@ def get_user(legajo: int):
 @app.get('/friends/{user_id}')
 def get_friends(user_id: str):
     q = "MATCH (u1:Usuario {{legajo: '{}'}})-[:amigoDe]->(u2:Usuario) \
-        RETURN u2".format(user_id)
+        RETURN DISTINCT u2".format(user_id)
     result = neo4j.query(q)
     return {'amigos': result}
 
