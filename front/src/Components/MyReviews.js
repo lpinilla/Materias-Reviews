@@ -31,7 +31,7 @@ export default class MyReviews extends Component {
     };
 
     render() {
-        const {inside, title, buttonText, cancel, children} = this.props;
+        const {inside, title, cancel, user} = this.props;
 
         return (
             <Grid item xs={12} sm={6} md={4} className="Card" >
@@ -64,8 +64,8 @@ export default class MyReviews extends Component {
                                         );
                                     }
                                 )}
-                                <ViewComment open={this.state.modal} handleClose={() => this.setState({modal: false})}
-                                              data={this.state.payload} cancel={cancel} review={this.state.reviews}>
+                                <ViewComment refreshAll={this.props.refreshAll} open={this.state.modal} handleClose={() => this.setState({modal: false})}
+                                              data={this.state.payload} cancel={cancel} review={this.state.reviews} user={user}>
                                 </ViewComment>
                             </TableBody>
                         </Table>

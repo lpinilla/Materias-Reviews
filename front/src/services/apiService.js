@@ -36,6 +36,10 @@ export function addReview(payload) {
     return http.post(`/review/add_review`, payload);
 }
 
+export function deleteReview(subject,payload) {
+    return http.post(`/review/${subject}/remove_review`,payload)
+}
+
 //User
 export function getUser(userID) {
     return http.get(`/users/${userID}`);
@@ -48,7 +52,10 @@ export function addFriend(userID,payload) {
     return http.post(`/users/${userID}/friend_request`, payload);
 }
 
-// TODO: getUserRecomendedCourses
+export function deleteFriend(userID,payload) {
+    return http.post(`/users/${userID}/remove_friend`,payload)
+}
+
 export function getUserRecomendedCourses(userID,min_score) {
     //Por ahi hay que cambiar userID a int
     return http.get(`/recommendations/${userID}/${min_score}`);

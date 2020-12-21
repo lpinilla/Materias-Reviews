@@ -41,8 +41,8 @@ function Cards({courses,myCourses, myReviews, myRecom, user, refreshAll, handleM
 
                 <MyRecomendations onChange={handleMinScoreChange} minScore={minScore} searchRecomendations={searchRecomendations} title="Mis Materias Recomendadas" inside={myRecom}/>
 
-                <MyReviews open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
-                         title="Mis Comentarios"  inside={myReviews.mis_reviews} reviews={true}/>
+                <MyReviews refreshAll={refreshAll} open={openCom} handleOpen={handleComClickOpen} handleClose={handleClose}
+                         title="Mis Comentarios"  inside={myReviews.mis_reviews} reviews={true} user={user}/>
 
                 <MyCards refreshAll={refreshAll} user={user} title="Todas las materias" open ={open}  handleOpen={handleClickOpen} handleClose={handleClose} inside={courses.materias} />
                 

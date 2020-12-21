@@ -114,7 +114,6 @@ export default class Home extends Component {
             <div>
                 <Header 
                     handleSubmit={async () => {
-                        console.log(this.state.user.usuario.legajo)
                         await addFriend(this.state.user.usuario.legajo,{
                             user_id: parseInt(this.state.friendLegajo)
                         })
@@ -124,7 +123,8 @@ export default class Home extends Component {
                     handleTextfieldChange={(e) => this.setState({ friendLegajo: e.target.value })}
                     friendLegajo={this.state.friendLegajo}
                     user={this.state.user} 
-                    selectedUser={this.state.selectedUser} myFriends={this.state.myFriends} />
+                    selectedUser={this.state.selectedUser} myFriends={this.state.myFriends}
+                    refreshAll={this.refreshAll}/>
                 <Description />
 
                 {/*<Cards courses={this.state.courses}/>*/}

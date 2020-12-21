@@ -50,7 +50,6 @@ export default class MyCards extends Component {
     }
     submitRateAndComment = async () => {
         const { rate, comment, selectedSubjet } = this.state;
-        console.log( parseInt(this.props.user.legajo),rate,comment,selectedSubjet.codigo);
         const response = await addReview({
             user_id: parseInt(this.props.user.usuario.legajo),
             puntaje: rate,
