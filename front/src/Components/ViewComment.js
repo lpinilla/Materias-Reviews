@@ -22,7 +22,7 @@ export default function ViewComment({review, open, handleClose, user,refreshAll}
         console.log("entro")
         await deleteReview(review.referencia, {user_id: parseInt(user.usuario.legajo)}
         )
-        // await refreshAll();
+        await refreshAll();
     }
 
     return (
