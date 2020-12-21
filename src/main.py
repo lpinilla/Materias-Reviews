@@ -134,7 +134,7 @@ def add_new_review(review: Review):
 
 @app.post('/review/{codigo_materia}/remove_review')
 def remove_review(codigo_materia: str, user: UserID):
-    result = reviews_coll.find({'autor': str(user.user_id), 'referencia': codigo_materia})
+    result = reviews_coll.remove({'autor': user.user_id, 'referencia': codigo_materia})
     q = "MATCH (u:Usuario {{legajo: '{}'}})-[r:opina]->(m:Materia {{codigo: '{}'}}) DELETE r;".format(user.user_id, codigo_materia)
     neo4j.query(q)
     return {'result': 'success'}
