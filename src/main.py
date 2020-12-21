@@ -165,7 +165,7 @@ def add_friend(legajo: int, user: UserID):
 @app.post('/users/{legajo}/remove_friend')
 def remove_friend(legajo: int, user: UserID):
     q = "MATCH (u1:Usuario {{legajo: '{}'}})-[r1:amigoDe]->(u2:Usuario {{legajo: '{}'}}) \
-        (u2)-[r2:amigoDe]->(u1) DELETE r1, r2;".format(user.user_id, legajo)
+        ,(u2)-[r2:amigoDe]->(u1) DELETE r1, r2;".format(user.user_id, legajo)
     result = neo4j.query(q)
     return {'result': result}
 

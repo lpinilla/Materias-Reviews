@@ -13,9 +13,18 @@ import {
 import Paper from "@material-ui/core/Paper";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
+import {deleteReview} from "../services/apiService";
 
 
-export default function ViewComment({review, open, handleClose}) {
+export default function ViewComment({review, open, handleClose, user,refreshAll}) {
+
+    async function deleteR() {
+        console.log("entro")
+        await deleteReview(review.referencia, {user_id: parseInt(user.usuario.legajo)}
+        )
+        // await refreshAll();
+    }
+
     return (
         <Dialog open={open} onClose={handleClose}
                 aria-labelledby="form-dialog-title">
@@ -33,18 +42,23 @@ export default function ViewComment({review, open, handleClose}) {
                         <TableBody>
                             <TableRow>
                                 <TableCell component="th" scope="row">
-                                    {review===undefined?null:review.comentario}
+                                    {review === undefined ? null : review.comentario}
                                 </TableCell>
-                                <TableCell align="right">{review===undefined?null:(review.rating ? review.rating: review.puntaje)}</TableCell>
+                                <TableCell
+                                    align="right">{review === undefined ? null : (review.rating ? review.rating : review.puntaje)}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
                 <DialogActions>
                     <div>
-                        <Button onClick={handleClose} color="primary">
-                            Eliminar
-                        </Button>
+                        {user.usuario !== undefined ?
+                            <Button onClick={() => deleteR()} color="primary">
+                                {/*<Button onClick={async () => {*/}
+                                {/*    await deleteReview(review.referencia,{user_id:parseInt(user.usuario.legajo)}*/}
+                                {/*    )}}  color="primary">*/}
+                                Eliminar
+                            </Button> : null}
                     </div>
                     <div>
                         <Button onClick={handleClose} color="primary">

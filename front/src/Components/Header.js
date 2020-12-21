@@ -10,15 +10,15 @@ import Button from "@material-ui/core/Button";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
-import { getHelloWorld, getUser } from "../services/apiService";
+import {deleteFriend, getHelloWorld, getUser} from "../services/apiService";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
-import { TableCell, TableRow } from "@material-ui/core";
+import {TableCell, TableRow} from "@material-ui/core";
 import TableHead from "@material-ui/core/TableHead";
 
 
-function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldChange, friendLegajo }) {
+function Header({user, selectedUser, myFriends, handleSubmit, handleTextfieldChange, friendLegajo,refreshAll}) {
     //user profile
     const [open, setOpen] = React.useState(false);
     //add friend
@@ -41,7 +41,13 @@ function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldCh
     if (user !== undefined)
         var usuario = user.usuario;
 
-
+    async function deleteF(friendID) {
+        await deleteFriend(usuario.legajo, {
+                user_id: friendID
+            }
+        )
+        await refreshAll();
+    }
 
     return (
         <AppBar position="static" color="default" elevation={0} className='AppBar'>
@@ -55,43 +61,44 @@ function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldCh
                     {usuario !== undefined ? (
                         <div>
                             <Link variant="button" color="textPrimary" href="#" className="Link"
-                                onClick={handleClickOpen} >
+                                  onClick={handleClickOpen}>
                                 Mi Usuario
                             </Link>
                             <Dialog open={open} onClose={handleClose}
-                                aria-labelledby="form-dialog-title">
+                                    aria-labelledby="form-dialog-title">
                                 <DialogTitle id="form-dialog-title">Mi usuario </DialogTitle>
-                                <DialogContent >
-                                    <TextField style={{ padding: "6px 24px 6px 16px" }}
-                                        id="name"
-                                        label="Nombre y Apellido"
-                                        defaultValue={usuario === undefined ? '' : usuario.nombre}
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                        fullWidth
+                                <DialogContent>
+                                    <TextField style={{padding: "6px 24px 6px 16px"}}
+                                               id="name"
+                                               label="Nombre y Apellido"
+                                               defaultValue={usuario === undefined ? '' : usuario.nombre}
+                                               InputProps={{
+                                                   readOnly: true,
+                                               }}
+                                               fullWidth
                                     />
-                                    <TextField style={{ padding: "6px 24px 6px 16px" }}
-                                        id="id"
-                                        label="Legajo"
-                                        defaultValue={usuario === undefined ? '' : usuario.legajo}
-                                        InputProps={{
-                                            readOnly: true,
-                                        }}
-                                        fullWidth
+                                    <TextField style={{padding: "6px 24px 6px 16px"}}
+                                               id="id"
+                                               label="Legajo"
+                                               defaultValue={usuario === undefined ? '' : usuario.legajo}
+                                               InputProps={{
+                                                   readOnly: true,
+                                               }}
+                                               fullWidth
                                     />
                                     <TableContainer>
-                                        <Table size="small" style={{ marginTop: "39px", borderTop: "dotted" }}>
+                                        <Table size="small" style={{marginTop: "39px", borderTop: "dotted"}}>
                                             <TableHead>
                                                 <TableRow>
-                                                    <TableCell style={{ fontWeight: "bold" }}>Amigos</TableCell>
-                                                    <TableCell style={{ textAlign: "right" }}>
+                                                    <TableCell style={{fontWeight: "bold"}}>Amigos</TableCell>
+                                                    <TableCell style={{textAlign: "right"}}>
                                                         <Button color="primary" onClick={handleClickOpenAdd}>
                                                             Añadir Amigo
                                                         </Button>
                                                         <Dialog open={openAdd} onClose={handleCloseAdd}
-                                                            aria-labelledby="form-dialog-title">
-                                                            <DialogTitle id="form-dialog-title">Añadir amigo </DialogTitle>
+                                                                aria-labelledby="form-dialog-title">
+                                                            <DialogTitle id="form-dialog-title">Añadir
+                                                                amigo </DialogTitle>
                                                             <DialogContent>
                                                                 <TextField
                                                                     id="legajo"
@@ -110,21 +117,25 @@ function Header({ user, selectedUser, myFriends, handleSubmit, handleTextfieldCh
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
-                                                {myFriends ? console.log(myFriends.data.amigos) : null}
                                                 {myFriends ? myFriends.data.amigos.map(e => {
-                                                    return (
-                                                        <TableRow>
-                                                            <TableCell component="th" scope="row">
-                                                                {e[0].nombre}
-                                                            </TableCell>
-                                                            <TableCell style={{ textAlign: "right" }}>
-                                                                <Button color="primary">
-                                                                    Eliminar
-                                                        </Button>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    )
-                                                })
+                                                        return (
+                                                            <TableRow>
+                                                                <TableCell component="th" scope="row">
+                                                                    {e[0].nombre}
+                                                                </TableCell>
+                                                                <TableCell style={{textAlign: "right"}}>
+                                                                    <Button color="primary" onClick={()=>deleteF(parseInt(e[0].legajo))}>
+                                                                    {/*<Button color="primary" onClick={async () => {*/}
+                                                                    {/*    await deleteFriend(usuario.legajo, {user_id: parseInt(e[0].legajo)}*/}
+                                                                    {/*    )*/}
+                                                                    {/*}}>*/}
+
+                                                                        Eliminar
+                                                                    </Button>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        )
+                                                    })
                                                     : null}
 
                                             </TableBody>
