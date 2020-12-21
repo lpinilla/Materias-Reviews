@@ -109,14 +109,14 @@ def get_my_review_comment(codigo_materia: str, user: UserID):
     return {'comentario': result[0]['comentario']}
 
 @app.get('/reviews/{user_id}')
-def get_my_reviews(user_id: str):
-    results = reviews_coll.find({'autor': str(user_id)},{'_id':False, 'autor':False})
+def get_my_reviews(user_id: int):
+    results = reviews_coll.find({'autor':user_id},{'_id':False})
     return {'mis_reviews': [rev for rev in results]}
 
 @app.post('/review/add_review')
 def add_new_review(review: Review):
     review = {
-    'autor': str(review.user_id),
+    'autor': review.user_id,
     'puntaje': str(review.puntaje),
     'comentario': review.comentario,
     'referencia': review.codigo_materia
@@ -168,6 +168,7 @@ def remove_friend(legajo: int, user: UserID):
         ,(u2)-[r2:amigoDe]->(u1) DELETE r1, r2;".format(user.user_id, legajo)
     result = neo4j.query(q)
     return {'result': result}
+
 
 
 ########################### RECOMMENDATIONS ###############################
