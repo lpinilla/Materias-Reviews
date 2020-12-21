@@ -5,8 +5,11 @@ from Neo4jConnection import Neo4jConnection
 from pydantic import BaseModel
 import json
 from fastapi.middleware.cors import CORSMiddleware
+import time
 
 #declarando objeto UserID
+
+time.sleep(15)
 
 class UserID(BaseModel):
     user_id : int
