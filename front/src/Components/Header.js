@@ -125,10 +125,7 @@ function Header({user, selectedUser, myFriends, handleSubmit, handleTextfieldCha
                                                                 </TableCell>
                                                                 <TableCell style={{textAlign: "right"}}>
                                                                     <Button color="primary" onClick={()=>deleteF(parseInt(e[0].legajo))}>
-                                                                    {/*<Button color="primary" onClick={async () => {*/}
-                                                                    {/*    await deleteFriend(usuario.legajo, {user_id: parseInt(e[0].legajo)}*/}
-                                                                    {/*    )*/}
-                                                                    {/*}}>*/}
+
 
                                                                         Eliminar
                                                                     </Button>
